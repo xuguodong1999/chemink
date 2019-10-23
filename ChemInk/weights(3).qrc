@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/weights/3.dat</file>
+    </qresource>
+</RCC>

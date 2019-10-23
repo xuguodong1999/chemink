@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/images/blackboard-background.png</file>
+        <file>Resources/images/blackboard-brush.png</file>
+        <file>Resources/images/blackboard-cursor.png</file>
+        <file>Resources/images/blackboard-eraser.png</file>
+        <file>Resources/images/loading.png</file>
+        <file>Resources/images/about-476.png</file>
+        <file>Resources/images/cls-476.png</file>
+        <file>Resources/images/exit-476.png</file>
+        <file>Resources/images/return-476.png</file>
+        <file>Resources/images/cls-576.png</file>
+        <file>Resources/images/cls-676.png</file>
+        <file>Resources/images/exit-576.png</file>
+        <file>Resources/images/exit-676.png</file>
+        <file>Resources/images/return-576.png</file>
+        <file>Resources/images/return-676.png</file>
+        <file>Resources/images/pencil-476.png</file>
+        <file>Resources/images/pencil-576.png</file>
+        <file>Resources/images/pencil-676.png</file>
+        <file>Resources/images/rubber-476.png</file>
+        <file>Resources/images/rubber-576.png</file>
+        <file>Resources/images/rubber-676.png</file>
+        <file>Resources/images/set-476.png</file>
+        <file>Resources/images/set-576.png</file>
+        <file>Resources/images/set-676.png</file>
+        <file>Resources/weights/chardetector.labels</file>
+        <file>Resources/openbabel/rigid-fragments.txt</file>
+        <file>Resources/openbabel/rigid-fragments-index.txt</file>
+        <file>Resources/openbabel/ring-fragments.txt</file>
+        <file>Resources/openbabel/UFF.prm</file>
+        <file>Resources/weights/chardetector-yolov3-tiny.cfg</file>
+        <file>Resources/weights/densenet-chdsbw.json</file>
+        <file>Resources/language/dictionary.txt</file>
+    </qresource>
+</RCC>

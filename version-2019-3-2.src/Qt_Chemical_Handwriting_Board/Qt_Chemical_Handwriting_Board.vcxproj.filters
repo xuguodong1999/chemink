@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskDistributionInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingBoard\DrawingBoard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingBoard\KeyBoard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingBoard\MyScript.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingBoard\SetBoard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChemicalEquationInterpreter\Element.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChemicalEquationInterpreter\Equation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChemicalEquationInterpreter\Fraction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChemicalEquationInterpreter\Function.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChemicalEquationInterpreter\Matter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MojoCNN\dictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="TaskDistributionInterface.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DrawingBoard\DrawingBoard.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DrawingBoard\KeyBoard.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DrawingBoard\SetBoard.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="TaskDistributionInterface.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DrawingBoard\DrawingBoard.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DrawingBoard\KeyBoard.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DrawingBoard\SetBoard.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MojoCNN\activation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MojoCNN\core_math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MojoCNN\cost.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MojoCNN\layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MojoCNN\mojo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MojoCNN\network.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MojoCNN\solver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MojoCNN\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingBoard\MyScript.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChemicalEquationInterpreter\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChemicalEquationInterpreter\Element.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChemicalEquationInterpreter\Equation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChemicalEquationInterpreter\Fraction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChemicalEquationInterpreter\Function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChemicalEquationInterpreter\Matter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MojoCNN\PatternRecognition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MojoCNN\dictionary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
