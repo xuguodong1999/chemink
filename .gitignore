@@ -1,10 +1,7 @@
 .vs/
 x64/
 ChemInk/x64/
-ChemInk/android/
 ChemInk/GeneratedFiles/
-ChemInk/script/
-ChemInk/third_party/
 *.aps
 *.dll
 *.lib
@@ -15,9 +12,5 @@ ChemInk/third_party/
 *.xml
 *.mapping
 *.dat
-*.txt
-*.prm
-*.labels
-*.cfg
 *tmp*
 *.rar
