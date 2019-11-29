@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindowClass</class>
+ <widget class="QMainWindow" name="MainWindowClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>602</width>
+    <height>310</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Mendeleev桌面</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout"/>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>602</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <widget class="QMenu" name="menu_13">
+     <property name="title">
+      <string>新建</string>
+     </property>
+     <addaction name="newProAct"/>
+     <addaction name="new3DAct"/>
+     <addaction name="newDrawAct"/>
+     <addaction name="newWriteAct"/>
+     <addaction name="newDocAct"/>
+    </widget>
+    <addaction name="menu_13"/>
+    <addaction name="openDoc"/>
+    <addaction name="closeCurDocAct"/>
+    <addaction name="exitAct"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>编辑</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>视图</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>项目</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_5">
+    <property name="title">
+     <string>生成</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_6">
+    <property name="title">
+     <string>调试</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_7">
+    <property name="title">
+     <string>测试</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_8">
+    <property name="title">
+     <string>分析</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_9">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <widget class="QMenu" name="menu_15">
+     <property name="title">
+      <string>矢量画板工具</string>
+     </property>
+     <widget class="QMenu" name="menu1">
+      <property name="title">
+       <string>橡皮</string>
+      </property>
+      <addaction name="selPixRubAct"/>
+      <addaction name="selStrRubAct"/>
+     </widget>
+     <addaction name="drawPathAct"/>
+     <addaction name="editPelAct"/>
+     <addaction name="editSceneAct"/>
+     <addaction name="menu1"/>
+     <addaction name="drawLineAct"/>
+     <addaction name="drawLinesAct"/>
+     <addaction name="drawCurAct"/>
+     <addaction name="drawRectAct"/>
+     <addaction name="drawSquAct"/>
+     <addaction name="drawPolAct"/>
+     <addaction name="drawEllAct"/>
+     <addaction name="drawRouAct"/>
+    </widget>
+    <addaction name="menu_15"/>
+    <addaction name="setFFAct"/>
+    <addaction name="setCgAct"/>
+   </widget>
+   <widget class="QMenu" name="menu_10">
+    <property name="title">
+     <string>扩展</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_11">
+    <property name="title">
+     <string>窗口</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_12">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+    <addaction name="helpAct"/>
+    <addaction name="updateAct"/>
+    <addaction name="messageAct"/>
+    <addaction name="aboutQtAct"/>
+    <addaction name="aboutMeAct"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
+   <addaction name="menu_5"/>
+   <addaction name="menu_6"/>
+   <addaction name="menu_7"/>
+   <addaction name="menu_8"/>
+   <addaction name="menu_9"/>
+   <addaction name="menu_10"/>
+   <addaction name="menu_11"/>
+   <addaction name="menu_12"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="newDocAct"/>
+   <addaction name="newWriteAct"/>
+   <addaction name="newDrawAct"/>
+   <addaction name="drawPathAct"/>
+   <addaction name="editPelAct"/>
+   <addaction name="editSceneAct"/>
+   <addaction name="selStrRubAct"/>
+   <addaction name="selPixRubAct"/>
+   <addaction name="setFFAct"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="toolTip">
+    <string>状态栏</string>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+   <property name="whatsThis">
+    <string>状态栏</string>
+   </property>
+  </widget>
+  <widget class="QDockWidget" name="dockViewWidget">
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>34</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border:1px solid #024E85</string>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>视窗盒</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QGridLayout" name="gridLayout_3"/>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockToolWidget">
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>34</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border:1px solid #024E85</string>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>工具</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3"/>
+  </widget>
+  <widget class="QDockWidget" name="dockSetWidget">
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>34</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border:1px solid #024E85</string>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>设置</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4"/>
+  </widget>
+  <action name="newProAct">
+   <property name="text">
+    <string>新建工程</string>
+   </property>
+   <property name="toolTip">
+    <string>新建工程</string>
+   </property>
+  </action>
+  <action name="new3DAct">
+   <property name="text">
+    <string>新建3D文档</string>
+   </property>
+   <property name="toolTip">
+    <string>新建用于编辑三维图元的文档</string>
+   </property>
+  </action>
+  <action name="newDrawAct">
+   <property name="text">
+    <string>新建矢量画板</string>
+   </property>
+   <property name="toolTip">
+    <string>新建多图层矢量画板</string>
+   </property>
+  </action>
+  <action name="newWriteAct">
+   <property name="text">
+    <string>弹出识别面板</string>
+   </property>
+   <property name="toolTip">
+    <string>弹出手写识别区域</string>
+   </property>
+  </action>
+  <action name="newDocAct">
+   <property name="text">
+    <string>新建通用文档</string>
+   </property>
+   <property name="toolTip">
+    <string>新建通用文档</string>
+   </property>
+  </action>
+  <action name="closeCurDocAct">
+   <property name="text">
+    <string>关闭</string>
+   </property>
+   <property name="toolTip">
+    <string>关闭当前文档</string>
+   </property>
+  </action>
+  <action name="exitAct">
+   <property name="text">
+    <string>退出</string>
+   </property>
+   <property name="toolTip">
+    <string>退出程序</string>
+   </property>
+  </action>
+  <action name="drawRectAct">
+   <property name="text">
+    <string>矩形</string>
+   </property>
+   <property name="toolTip">
+    <string>选择矩形绘制工具</string>
+   </property>
+  </action>
+  <action name="drawSquAct">
+   <property name="text">
+    <string>正方形</string>
+   </property>
+   <property name="toolTip">
+    <string>选择正方形绘制工具</string>
+   </property>
+  </action>
+  <action name="drawLineAct">
+   <property name="text">
+    <string>线段</string>
+   </property>
+   <property name="toolTip">
+    <string>选择线段绘制工具</string>
+   </property>
+  </action>
+  <action name="drawEllAct">
+   <property name="text">
+    <string>椭圆</string>
+   </property>
+   <property name="toolTip">
+    <string>选择椭圆绘制工具</string>
+   </property>
+  </action>
+  <action name="drawRouAct">
+   <property name="text">
+    <string>标准圆</string>
+   </property>
+   <property name="toolTip">
+    <string>选择标准圆绘制工具</string>
+   </property>
+  </action>
+  <action name="drawCurAct">
+   <property name="text">
+    <string>曲线</string>
+   </property>
+   <property name="toolTip">
+    <string>选择曲线绘制工具</string>
+   </property>
+  </action>
+  <action name="drawLinesAct">
+   <property name="text">
+    <string>折线</string>
+   </property>
+   <property name="toolTip">
+    <string>选择折线绘制工具</string>
+   </property>
+  </action>
+  <action name="drawPolAct">
+   <property name="text">
+    <string>多边形</string>
+   </property>
+   <property name="toolTip">
+    <string>选择多边形绘制工具</string>
+   </property>
+  </action>
+  <action name="setFFAct">
+   <property name="text">
+    <string>配置分子力场</string>
+   </property>
+  </action>
+  <action name="setCgAct">
+   <property name="text">
+    <string>图元生成算法</string>
+   </property>
+  </action>
+  <action name="editSceneAct">
+   <property name="text">
+    <string>拖动画布</string>
+   </property>
+   <property name="toolTip">
+    <string>禁用画笔，进入画布拖曳状态，ctrl+鼠标滚轮进行缩放，支持常用手势操作</string>
+   </property>
+  </action>
+  <action name="selPixRubAct">
+   <property name="text">
+    <string>像素橡皮</string>
+   </property>
+   <property name="toolTip">
+    <string>选择大小可调整的像素级橡皮</string>
+   </property>
+  </action>
+  <action name="selStrRubAct">
+   <property name="text">
+    <string>笔迹橡皮</string>
+   </property>
+   <property name="toolTip">
+    <string>选择用来擦掉碰到的笔画的笔迹橡皮</string>
+   </property>
+  </action>
+  <action name="drawPathAct">
+   <property name="text">
+    <string>笔</string>
+   </property>
+   <property name="toolTip">
+    <string>选择手写工具</string>
+   </property>
+  </action>
+  <action name="openDoc">
+   <property name="text">
+    <string>打开</string>
+   </property>
+   <property name="toolTip">
+    <string>打开存储器上的文档</string>
+   </property>
+  </action>
+  <action name="helpAct">
+   <property name="text">
+    <string>查看帮助</string>
+   </property>
+  </action>
+  <action name="aboutQtAct">
+   <property name="text">
+    <string>关于Qt</string>
+   </property>
+   <property name="toolTip">
+    <string>关于Qt</string>
+   </property>
+  </action>
+  <action name="aboutMeAct">
+   <property name="text">
+    <string>关于应用</string>
+   </property>
+   <property name="toolTip">
+    <string>关于应用</string>
+   </property>
+  </action>
+  <action name="updateAct">
+   <property name="text">
+    <string>检查更新</string>
+   </property>
+   <property name="toolTip">
+    <string>检查更新</string>
+   </property>
+  </action>
+  <action name="messageAct">
+   <property name="text">
+    <string>发送反馈</string>
+   </property>
+   <property name="toolTip">
+    <string>发送反馈</string>
+   </property>
+  </action>
+  <action name="notifyAct">
+   <property name="text">
+    <string>通知</string>
+   </property>
+   <property name="toolTip">
+    <string>显示应用通知</string>
+   </property>
+  </action>
+  <action name="cloudAct">
+   <property name="text">
+    <string>云服务</string>
+   </property>
+   <property name="toolTip">
+    <string>添加到云服务</string>
+   </property>
+  </action>
+  <action name="editPelAct">
+   <property name="text">
+    <string>编辑图元</string>
+   </property>
+   <property name="toolTip">
+    <string>禁用画笔，进入图元的拖曳、缩放、旋转编辑状态</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="mainwindow.qrc"/>
+ </resources>
+ <connections/>
+</ui>

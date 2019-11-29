@@ -1,388 +1,335 @@
+#include "stdafx.h"
 #include "scribblearea.h"
-#include <QDebug>
 #include <QPainter>
-#include <ctime>
-#include <cmath>
-#include <vector>
-#include <algorithm>
-#include <list>
-#include <cstdlib>
-#include <string>
-#include <iostream>
 using namespace std;
 
-Stroke::Stroke(QPoint& _p) {
-	points.clear();
-	points.push_back(_p);
-}
+#define drawline(_from, _to) \
+	QPainter painter(instBuffer);\
+	painter.setPen(pen);\
+	if (_from != _to) \
+		painter.drawLine(_from, _to);\
+	else \
+		painter.drawPoint(_from);\
+	int rad = (pen.width() / 2) + 2;\
+	update(QRect(_from, _to).normalized().adjusted(-rad, -rad, +rad, +rad));
 
-Stroke::~Stroke() {
-	points.clear();
-}
+#define rubberline(_from, _to) \
+	QPainter painter(instBuffer);\
+	painter.setPen(rubber);\
+	if (_from != _to) \
+		painter.drawLine(_from, _to);\
+	else \
+		painter.drawPoint(_from);\
+	int rad = (rubber.width() / 2) + 2;\
+	update(QRect(_from, _to).normalized().adjusted(-rad, -rad, +rad, +rad));
 
-void Stroke::push_back(QPoint& _p) {
-	points.push_back(_p);
-}
-
-void Stroke::setRect() {
-	int xmin, ymin, xmax, ymax;
-	xmin = ymin = std::numeric_limits<int>::max();
-	xmax = ymax = std::numeric_limits<int>::min();
-	for (auto& i : points) {
-		xmin = xmin < i.x() ? xmin : i.x();
-		ymin = ymin < i.y() ? ymin : i.y();
-		xmax = xmax > i.x() ? xmax : i.x();
-		ymax = ymax > i.y() ? ymax : i.y();
-	}
-	int rad = 5;
-	setX(xmin - rad);
-	setY(ymin - rad);
-	setWidth(xmax - xmin + 2 * rad);
-	setHeight(ymax - ymin + 2 * rad);
-}
-
-QPoint& Stroke::at(int i) {
-	return points.at(i);
-}
-
-vector<QPoint>* Stroke::getPoints() {
-	return &points;
-}
+#define BUTTON_STYLESHEET \
+	"QToolButton{ border-image:url(:/Resources/%1-476.png)}" \
+	"QToolButton:hover{border-image:url(:/Resources/%1-576.png)}" \
+	"QToolButton:pressed{border-image:url(:/Resources/%1-676.png)}"
 
 ScribbleArea::ScribbleArea(QWidget* parent) :
-	isDragging(false),
-	isPen(false) {
-	setParent(parent);
-	setWindowFlags(Qt::FramelessWindowHint);
+	isPen(true), justResized(false), QWidget(parent), instBuffer(new QPixmap(7680, 4320)),
+	countCall(0),allowIn(false) {
+	//setWindowFlags(Qt::FramelessWindowHint);
+	instBuffer->fill(Qt::white);
+	pen.setColor(Qt::black);
+	pen.setCapStyle(Qt::PenCapStyle::RoundCap);
+	pen.setWidth(7);
+	rubber.setColor(Qt::white);
+	rubber.setCapStyle(Qt::PenCapStyle::RoundCap);
+	rubber.setWidth(20);
 
-	script = new list<Stroke>;
-	emit sendStrokeData(script);
+	rubberBtn = new QToolButton(this);
+	pencilBtn = new QToolButton(this);
+	setBtn = new QToolButton(this);
+	clsBtn = new QToolButton(this);
+	connect(clsBtn, &QToolButton::clicked,
+		this, [=](bool checked) {
+			rs.clear();
+			repaintRawScript();
+		}
+	);
+	screenLabel = new QLabel(this);
+	connect(rubberBtn, &QToolButton::clicked,
+		this, [=](bool checked) {
+			isPen = false;
+			QPixmap pixmap(":/Resources/rubber-476.png");
+			setCursor(QCursor(pixmap.scaled(50, 50), 20, 45));
+		}
+	);
+	rubberBtn->setWindowFlags(Qt::FramelessWindowHint);
+	rubberBtn->setCheckable(false);
+	connect(pencilBtn, &QToolButton::clicked,
+		this, [=](bool checked) {
+			isPen = true;
+			QPixmap pixmap(":/Resources/pencil-476.png");
+			setCursor(QCursor(pixmap.scaled(50, 50), 0, 40));
+		}
+	);
+	pencilBtn->setWindowFlags(Qt::FramelessWindowHint);
+	pencilBtn->setCheckable(false);
+	pencilBtn->clicked(true);
 
-	instBuffer = QPixmap(size());
-	rubberPix.load(":/Resources/images/blackboard-eraser.png");
-	cursorPix.load(":/Resources/images/blackboard-cursor.png");
-}
-
-list<Stroke>* ScribbleArea::getScript() {
-	return script;
-}
-
-void ScribbleArea::acceptRubber(bool _isPen) {
-	isPen = _isPen;
-	if (isPen) {
-		setCursor(QCursor(cursorPix.scaled(40, 50), 0, 0));
-	}
-	else {
-		setCursor(QCursor(rubberPix.scaled(80, 80), 15, 30));
-	}
-}
-
-ScribbleArea::~ScribbleArea() {
-	/*if (script) {
-		delete script;
-		script = nullptr;
-	}*/
-	//  由组件调用者回收内存@writtingpanel
-}
-
-void ScribbleArea::loadStyle(DrawingStyle _drawingstyle) {
-	drawingstyle = _drawingstyle;
-	loadStyle();
-}
-
-void ScribbleArea::loadStyle() {
-	switch (drawingstyle) {
-	case BLACKBOARD:
-		setCursor(QCursor(cursorPix.scaled(40, 50), 0, 0));
-		//setCursor(QCursor(Qt::CursorShape::CrossCursor));
-		brushPix.load(":/Resources/images/blackboard-brush.png");
-		pen.setBrush(QBrush(brushPix));
-
-		backPix.load(":/Resources/images/blackboard-background.png");
-		break;
-	case WHITEBOARD:
-		setCursor(QCursor(Qt::CursorShape::CrossCursor));
-
-		brushPix = QPixmap(100, 100); brushPix.fill(Qt::black);
-		pen.setBrush(QBrush(brushPix));
-
-		backPix = QPixmap(100, 100); backPix.fill(Qt::white);
-		break;
-	case PAPER:
-	L:
-		break;
-	default:
-		goto L;
-	}
-	pen.setCapStyle(Qt::RoundCap);
-	pen.setJoinStyle(Qt::RoundJoin);
-	pen.setWidth(6);
-}
-
-void ScribbleArea::drawline(const QPoint& _from, const QPoint& _to, QPaintDevice& _device) {
-	QPainter painter(&_device);
-	painter.setPen(pen);
-	if (_from != _to) {
-		painter.drawLine(_from, _to);
-	}
-	else {
-		painter.drawPoint(_from);
-	}
-	int rad = (pen.width() / 2) + 2;//  局部更新
-	update(QRect(_from, _to).normalized().adjusted(-rad, -rad, +rad, +rad));
-}
-
-void ScribbleArea::clear() {
-	if (!script || script->empty())
-		return;
-	//  旧内存位于@writtingpanel的historyScripts中
-	script = new list<Stroke>;
-	emit sendStrokeData(script);
-	repaintRawScript();
-	update();
-}
-
-void ScribbleArea::cancelStroke() {
-	if (!script || rubber.empty())
-		return;
-	bool isTarget;
-	pen.setBrush(QBrush(backPix));//  笔刷置为背景色用于覆盖
-	std::vector<QPoint>* points;
-	//  cout << "rubber.size() = " << rubber.size() << endl;
-	for (auto& i : rubber) {
-		isTarget = false;
-		for (auto j = script->begin(); j != script->end();) {
-			for (auto& k : *(j->getPoints())) {
-				if (i.contains(k)) {
-					isTarget = true;
-					break;
+	connect(
+		this, &ScribbleArea::updateInScribbleArea,
+		this, [=]() {
+			countCall++;				//  请求耗时负载的次数加一
+			std::thread* threadContainer = new std::thread([=]() {
+				if (countCall >= 2) {	//  如果新来很多请求，将未执行请求合并为2个
+					countCall = 2;
+					return;
 				}
-			}
-			if (isTarget) {
-				points = j->getPoints();
-				switch (points->size()) {
-				case 0:
-					break;
-				case 1:
-					drawline(points->at(0), points->at(0), instBuffer);
-					break;
-				default:
-					for (size_t jj = 1; jj < points->size(); jj++) {
-						drawline(points->at(jj - 1), points->at(jj), instBuffer);
+				const vector<vector<string>>& res = rs.recognize();
+				QString renderData("<html><h1>");
+				for (auto& word : res.at(0)) {
+					if (SpellCorrector::getWordType(word) == SpellCorrector::EXPLICTCUT) {
+						renderData.append(word.c_str());
 					}
-					break;
+					else {
+						renderData.append(chembalancer.addHtml(string(word)).c_str());
+					}
 				}
-				j = script->erase(j);
-				break;
-			}
-			else {
-				j++;
-			}
+				renderData.append("</h1></html>");
+				QMetaObject::invokeMethod(screenLabel, "setText", 
+					Q_ARG(const QString&, renderData));
+										//  耗时负载结束
+				if (countCall == 2) {	//  如果执行完当前请求，还有请求，就再执行一次
+					countCall = 1;
+					updateInScribbleArea();
+				}
+				countCall = 0;			//  计数器归零前，已经执行过多余的请求a
+				}
+			);
+			threadContainer->detach();	//转后台线程，由运行库负责回收
 		}
-	}
-	pen.setBrush(QBrush(brushPix));//  恢复笔刷
-}
+	);
+	rubberBtn->setStyleSheet(QString(BUTTON_STYLESHEET).arg("rubber"));
+	pencilBtn->setStyleSheet(QString(BUTTON_STYLESHEET).arg("pencil"));
+	setBtn->setStyleSheet(QString(BUTTON_STYLESHEET).arg("set"));
+	clsBtn->setStyleSheet(QString(BUTTON_STYLESHEET).arg("cls"));
+	rs.setPanel(this);
+	rs.setImage(instBuffer);
 
-//  不到迫不得已，不要全局重绘
-void ScribbleArea::repaintRawScript() {
-	if (!script)
-		return;
-	instBuffer = QPixmap(size());
-	//  procBuffer = QPixmap(size());
-	QPainter painter(&instBuffer);
-	painter.drawPixmap(QRect(x(), y(), width(), height()), backPix, backPix.rect());
-	//  TODO: 完成笔迹的迁移重绘
-	painter.end();
-	std::vector<QPoint>* points;
-	for (auto i = script->begin(); i != script->end(); i++) {
-		points = i->getPoints();
-		switch (points->size()) {
-		case 0:
-			break;
-		case 1:
-			drawline(points->at(0), points->at(0), instBuffer);
-			break;
-		default:
-			for (size_t j = 1; j < points->size(); j++) {
-				drawline(points->at(j - 1), points->at(j), instBuffer);
-			}
-			break;
+
+	browser.setWindowModality(Qt::ApplicationModal);
+	browser.hide();
+	connect(setBtn, &QToolButton::clicked,
+		this, [=](bool checked) {
+			const vector<vector<string>>& res = rs.recognize();
+			browser.setEleBox(res);
+			browser.move(x(), y());
+			//browser.resize(size() / 2);//  TODO:解决Browser::TolBtn的label文字居中问题？
+			browser.resize(size());
+			browser.show();
+			this->hide();
 		}
-	}
-}
-
-void ScribbleArea::repaintByBezier() {
-	if (!script)
-		return;
-	vector<QPoint>* pointer(nullptr);
-	vector<QPoint> newScript;
-	for (auto i = script->begin(); i != script->end(); i++) {
-		pointer = i->getPoints();
-		newScript = bezier(*pointer);
-		switch (newScript.size()) {
-		case 0:
-			break;
-		case 1:
-			drawline(newScript[0], newScript[0], procBuffer);
-			break;
-		default:
-			for (size_t j = 1; j < newScript.size(); j++) {
-				drawline(newScript.at(j - 1), newScript.at(j), procBuffer);
-			}
+	);
+	connect(&browser, &Browser::iAmClosed, this,
+		[=]() {
+			browser.hide();
+			this->show();
 		}
-	}
-}
+	);
 
-void ScribbleArea::reloadStroke(std::list<Stroke>* _script) {
-	if (!script) {
-		delete script;
-	}
-	script = _script;
+	setFocus();
 }
 
 void ScribbleArea::mousePressEvent(QMouseEvent* event) {
-	if (event->button() == Qt::LeftButton) {
-		qDebug() << "mouse press...";
+	switch (event->button()) {
+	case Qt::LeftButton:
+		lastPos = QPoint((numeric_limits<int>::min)(), (numeric_limits<int>::min)());
+		curPos = event->pos();
 		if (isPen) {
-			lastPos = event->pos();
-			//  drawline(lastPos, lastPos, instBuffer);
-			script->push_back(Stroke(lastPos));
-			isDragging = true;
+			drawline(curPos, curPos);
+			rs.curStroke = RawScript::PainterPath(curPos);
 		}
 		else {
-			rubber.clear();
-			int rad = 10;
-			QPoint p(rad, rad);
-			rubber.push_back(QRect(event->pos() - p, event->pos() + p));
-			cancelStroke();
+			rubberline(curPos, curPos);
+			rs.popStroke(curPos);
+			rubberPath = QPainterPath(curPos);
 		}
-	}
-	else {
-		;
+		break;
+	default:
+		break;
 	}
 }
 
 void ScribbleArea::mouseMoveEvent(QMouseEvent* event) {
-	//if (!isDragging)
-	//	return;
-	if (event->buttons() == Qt::LeftButton) {
+	switch (event->buttons()) {
+	case Qt::LeftButton:
+		lastPos = curPos;
+		curPos = event->pos();
 		if (isPen) {
-			drawline(lastPos, event->pos(), instBuffer);
-			lastPos = event->pos();
-			script->back().push_back(lastPos);
+			drawline(lastPos, curPos);
+			rs.curStroke.lineTo(curPos);
 		}
 		else {
-			if ((rand() % 100) % 3 != 0)
-				return;
-			int rad = 10;
-			QPoint p(rad, rad);
-			rubber.push_back(QRect(event->pos() - p, event->pos() + p));
-			cancelStroke();
+			rubberline(lastPos, curPos);
+			rubberPath.lineTo(curPos);
 		}
+		autoResize();
+		break;
+	default:
+		break;
 	}
-	else {
-		;
-	}
+
 }
 
 void ScribbleArea::mouseReleaseEvent(QMouseEvent* event) {
-	if (event->button() == Qt::LeftButton) {
-		qDebug() << "mouse release...";
+	switch (event->button()) {
+	case Qt::LeftButton:
 		if (isPen) {
-			drawline(lastPos, event->pos(), instBuffer);
-			lastPos = event->pos();
-			script->back().push_back(lastPos);
-			script->back().setRect();
-			isDragging = false;
-			emit askForRecognize();
+			rs.pushStroke();
 		}
 		else {
-			int rad = 10;
-			QPoint p(rad, rad);
-			rubber.push_back(QRect(event->pos() - p, event->pos() + p));
-			cancelStroke();
+			rs.popStroke(curPos);
+			rs.popStroke(rubberPath);
+			repaintRawScript();
 		}
-	
-	}
-	else {
-
-	}
-}
-
-void ScribbleArea::undo() {
-	if (!script || script->size() < 1)
-		return;
-	pen.setBrush(QBrush(backPix));//  笔刷置为背景色用于覆盖
-	std::vector<QPoint>* points = script->back().getPoints();
-	switch (points->size()) {
-	case 0:
-		break;
-	case 1:
-		drawline(points->at(0), points->at(0), instBuffer);
+		emit updateInScribbleArea();
 		break;
 	default:
-		for (size_t jj = 1; jj < points->size(); jj++) {
-			drawline(points->at(jj - 1), points->at(jj), instBuffer);
-		}
 		break;
 	}
-	script->pop_back();
-	pen.setBrush(QBrush(brushPix));//  恢复笔刷
 }
 
 void ScribbleArea::paintEvent(QPaintEvent* event) {
 	//  qDebug() << "paint...";
-	QRect rect = event->rect();
+	const QRect& rect = event->rect();
 	QPainter painter(this);
-	painter.setRenderHint(QPainter::Antialiasing);
-	//  目前没有用贝塞尔曲线重绘，用不到procBuffer
-	if (isDragging) {
-		painter.drawPixmap(rect, instBuffer, rect);
-		//painter.drawPixmap(rect, procBuffer, rect);
-	}
-	else {
-		painter.drawPixmap(rect, instBuffer, rect);
-	}
+	painter.drawPixmap(rect, *instBuffer, rect);
+}
 
+void ScribbleArea::updateLayout() {
+	int w = scaleK * 4;
+	int b = 10;
+	rubberBtn->resize(w, w);
+	setBtn->resize(w, w);
+	pencilBtn->resize(w, w);
+	clsBtn->resize(w, w);
+	pencilBtn->move(b, b);
+	rubberBtn->move(b, 2 * b + w);
+	setBtn->move(b, 3 * b + 2 * w);
+	clsBtn->move(b, 4 * b + 3 * w);
+	screenLabel->move(2 * b + w, b);
+	screenLabel->resize(width() - 3 * b - w, 1.5 * w);
+	//QPixmap screenPixmap(screenLabel->size());
+	//screenPixmap.fill(qRgb(225,235,235));
+	//screenLabel->setPixmap(screenPixmap);
+	screenLabel->setStyleSheet("background-color:rgb(225,235,235)");
+}
+
+void ScribbleArea::repaintRawScript() {
+	if (instBuffer != nullptr) {
+		delete instBuffer;
+	}
+	instBuffer = new QPixmap(7680, 4320);
+	rs.setImage(instBuffer);
+	instBuffer->fill(Qt::white);
+	QPainter painter(instBuffer);
+	painter.setPen(pen);
+	for (auto& i : rs.getScript()) {
+		painter.drawPath(i);
+	}
+	emit updateInScribbleArea();
+	update();
+}
+
+void ScribbleArea::autoResize() {
+	if (upBorder.contains(curPos)) {
+		if (y() - scaleK > 0 && scaleK + height() < getDesktopSize().height() - 100) {
+			move(x(), y() - scaleK);
+			resize(width(), scaleK + height());
+		}
+	}
+	else if (downBorder.contains(curPos)) {
+		if (scaleK + height() < getDesktopSize().height() - 100) {
+			resize(width(), scaleK + height());
+		}
+	}
+	if (leftBorder.contains(curPos)) {
+		if (x() - scaleK > 0 && width() + scaleK < getDesktopSize().width()) {
+			move(x() - scaleK, y());
+			resize(width() + scaleK, height());
+		}
+	}
+	else if (rightBorder.contains(curPos)) {
+		if (x() > 0 && x() + width() + scaleK < getDesktopSize().width()) {
+			resize(width() + scaleK, height());
+		}
+	}
 }
 
 void ScribbleArea::resizeEvent(QResizeEvent* event) {
-	repaintRawScript();
-	//  instBuffer = procBuffer;
+	QWidget::resizeEvent(event);
+	scaleK = width() / 64;
+	updateLayout();
+	upBorder.setCoords(0, 0, width(), scaleK);
+	downBorder.setCoords(0, height() - scaleK, width(), height());
+	leftBorder.setCoords(0, 0, scaleK, height());
+	rightBorder.setCoords(width() - scaleK, 0, width() - scaleK, height());
+	if (instBuffer->isNull()) {
+		*instBuffer = QPixmap(size());
+		instBuffer->fill(Qt::white);
+	}
+	else {
+		if (instBuffer->width() < width() || instBuffer->height() < height()) {
+			QPixmap* newPixmap = new QPixmap(size());
+			newPixmap->fill(Qt::white);
+			QPainter painter(newPixmap);
+			painter.drawPixmap(0, 0, width(), height(), *instBuffer);
+			delete instBuffer;
+			instBuffer = newPixmap;
+			rs.setImage(instBuffer);
+		}
+	}
+	update();
 }
 
-QPixmap* ScribbleArea::getInstBuffer() {
-	//procBuffer.fill(Qt::transparent);
-	//return &procBuffer;
-	return &instBuffer;
+void ScribbleArea::moveEvent(QMoveEvent* event) {
+	int lastX = x(), lastY = y();
+	QWidget::moveEvent(event);
+	if (justResized) {
+		justResized = false;
+	}
+	updateLayout();
 }
 
-vector<QPoint> bezier(vector<QPoint> rawpoints) {
-	if (rawpoints.size() < 1)
-		return rawpoints;
-	const float step = 0.01;
-	vector<QPoint> res;
-	if (rawpoints.size() == 1) {//递归结束
-		for (float t = 0; t < 1; t += step)
-			res.push_back(rawpoints[0]);
-		return res;
+void ScribbleArea::wheelEvent(QWheelEvent* event) {
+	if (QApplication::keyboardModifiers() == Qt::CTRL) {
+		QPoint numPixels = event->pixelDelta();
+		QPoint numDegrees = event->angleDelta() / 8;
+		if (!numPixels.isNull()) {
+			if (isPen) {
+				int w = pen.width() + numPixels.y();
+				if (w <= 0)w = 1;
+				pen.setWidth(w);
+			}
+			else {
+				int w = rubber.width() + numPixels.y();
+				if (w <= 0)w = 1;
+				rubber.setWidth(w);
+			}
+		}
+		else if (!numDegrees.isNull()) {
+			QPoint numSteps = numDegrees / 15;
+			if (isPen) {
+				int w = pen.width() + numSteps.y();
+				if (w <= 0)w = 1;
+				pen.setWidth(w);
+			}
+			else {
+				int w = rubber.width() + numSteps.y();
+				if (w <= 0)w = 1;
+				rubber.setWidth(w);
+			}
+		}
+		event->accept();
 	}
-	vector<QPoint> rawpoints1;
-	vector<QPoint> rawpoints2;
-	rawpoints1.assign(rawpoints.begin(), rawpoints.end() - 1);
-	rawpoints2.assign(rawpoints.begin() + 1, rawpoints.end());
+}
 
-
-	vector<QPoint> pln1 = bezier(rawpoints1);
-	vector<QPoint> pln2 = bezier(rawpoints2);
-	// 已经划分成最小单元
-	for (float t = 0; t < 1; t += step) {
-		res.push_back(
-			QPoint(
-			(1.0 - t) * pln1[round(1.0 / step * t)] +
-				t * pln2[round(1.0 / step * t)]
-			)
-		);
-	}
-	return res;
+void ScribbleArea::closeEvent(QCloseEvent* event) {
+	rubberBtn->close();
+	event->accept();
 }

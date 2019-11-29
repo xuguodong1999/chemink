@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>Resources/weights/2.dat</file>
-    </qresource>
-</RCC>

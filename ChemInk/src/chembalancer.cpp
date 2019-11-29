@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "chembalancer.h"
 
 //#define TESTCEI

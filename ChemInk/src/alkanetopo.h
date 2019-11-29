@@ -1,5 +1,6 @@
 #pragma once
 
+#include "stdafx.h"
 #include <vector>
 #include <string>
 #include <set>
@@ -13,7 +14,7 @@ private:
 	int nodeOfMaxSubTree;
 	void dfsCollectSizeOfSon(int x, int father);
 	void dfsGetSeq(int x, int father);
-    void dfsGetSMILES(int x, int father);
+	void dfsGetSMILES(int x, int father);
 public:
 	UnrootedTree();
 	~UnrootedTree();
@@ -44,7 +45,7 @@ public:
 	void getAlkaneTopo();
 	void getAlkaneTopo(std::vector<std::string>& result, std::vector<int>& targetCarbonNum);
 	bool setNumberOfCarbon(int n);									//  设置并检查碳原子数
-    int getNumberOfCarbon()const;
+	int getNumberOfCarbon()const;
 	const std::vector<std::vector<unsigned char>>* getCurStruct();			//  返回表示当前拓扑的邻接表地址
 };
 

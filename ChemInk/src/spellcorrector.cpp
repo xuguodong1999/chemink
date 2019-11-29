@@ -1,82 +1,28 @@
+#include "stdafx.h"
 #include "spellcorrector.h"
 #include <iostream>
 #include <QFile>
 using namespace std;
 
-//LETTERTYPE getType(vector<LETTERTYPE> _env) {
-//	switch (_env.size()) {
-//	case 0:
-//		return LETTERTYPE::NONE;
-//	case 1:
-//		break;
-//	case 2:
-//		break;
-//	default:
-//		break;
-//	}
-//	switch (_index){
-//	case 0:
-//		return LETTERTYPE::DIGIT; break;		//  数字
-//	case 0:
-//		return LETTERTYPE::CAPITAL; break;	//  大写字母
-//	case 0:
-//		return LETTERTYPE::LITTLE; break;		//  小写字母
-//	case 0:
-//		return LETTERTYPE::GREEK; break;		//  希腊字母
-//	case 0:
-//		return LETTERTYPE::MATH; break;		//  数学运算符
-//	case 0:
-//		return LETTERTYPE::INFO; break;		//  注释符如上下箭头
-//	case 0:
-//		return LETTERTYPE::SYMBOL; break;		//  标点符号
-//	case 0:
-//		return LETTERTYPE::NONE; break;		//  无意义字符
-//	default:
-//		break;
-//	}
-//	return LETTERTYPE::NONE;
-//}
-//
-////  similarWords[...]={x1,x2,...xn};
-////  handle x1,...,xn
-//vector<string> dim2Precise(vector<vector<int>>& _inputWords) {
-//	vector<string> results;
-//	//  先索引模糊表，得到模糊表大小，局部遍历模糊表，获得字符类型，送入决策树
-//	for (auto& probs : _inputWords) {
-//		;
-//	}
-//
-//
-//	for (auto& i : similarWords) {
-//		for (auto& j : i) {
-//			cout << j << endl;
-//		}
-//	}
-//	return results;
-//}
-
 vector<string> SpellCorrector::validWords;
 
 SpellCorrector::SpellCorrector() {
-	if (validWords.empty()) {
-		QFile freader(":/Resources/language/dictionary.txt");
-		freader.open(QIODevice::ReadOnly | QIODevice::Text);
-		char tmp[50];
-		if (freader.isOpen()) {
-			freader.readLine(tmp, 50);
-			while (true) {
-				validWords.push_back(tmp);
-				validWords.back().pop_back();
-				freader.readLine(tmp, 50);
-				if (freader.atEnd())
-					break;
-			}
+	validWords.clear();
+	QFile freader(":/Resources/dictionary.txt");
+	freader.open(QIODevice::ReadOnly | QIODevice::Text);
+	if (freader.isOpen()) {
+		while (!freader.atEnd()) {
+			validWords.push_back(freader.readLine().toStdString());
+			validWords.back().pop_back();
 		}
-		else {
-			std::cout << "无法打开字典文件" << std::endl;
-		}
-		freader.close();
 	}
+	else {
+		throwErrorBox("资源文件打开错误", "无法打开字典文件");
+	}
+	freader.close();
+	//for (auto& i : validWords) {
+	//	cout << i << endl;
+	//}
 }
 
 SpellCorrector::~SpellCorrector() {
@@ -189,10 +135,10 @@ int SpellCorrector::getCnnIndex(int outIndex) {
 		return 30;
 	case  51:
 		return 68;
-	case  52:
+	case  52:case  53:case  65:case  66:// Ω、O、σ、θ
 		return 3;
-	case  53:
-		return 74;
+		//case  53:
+		//	return 74;
 	case  54:
 		return 8;
 	case  55:
@@ -215,10 +161,10 @@ int SpellCorrector::getCnnIndex(int outIndex) {
 		return 48;
 	case  64:
 		return 2;
-	case  65:
-		return 14;
-	case  66:
-		return 22;
+		//case  65:
+		//	return 14;
+		//case  66:
+		//	return 22;
 	case  67:
 		return 70;
 	case  68:
@@ -303,7 +249,7 @@ map<std::string, std::string> SpellCorrector::unicode2chemAsciiMap = {
 	{"Ｄ","D"},
 	{"Ｅ","E"},
 	{"Ｆ","F"},
-	{"Ｇ","G"},
+	{"Ｇ","C"},
 	{"Ｈ","H"},
 	{"Ｉ","I"},
 	{"Ｊ","J"},
@@ -313,7 +259,7 @@ map<std::string, std::string> SpellCorrector::unicode2chemAsciiMap = {
 	{"Ｎ","N"},
 	{"Ｏ","O"},
 	{"Ｐ","P"},
-	{"Ｑ","Q"},
+	{"Ｑ","O"},
 	{"Ｒ","R"},
 	{"Ｓ","S"},
 	{"Ｔ","T"},
@@ -361,7 +307,7 @@ map<std::string, std::string> SpellCorrector::unicode2chemAsciiMap = {
 	{"α","alpha"},
 	{"β","beta"},
 	{"γ","..."},
-	{"δ","delta"},
+	{"δ","8"},
 	{"ε","..."},
 	{"ζ","..."},
 	{"η","..."},
@@ -371,7 +317,7 @@ map<std::string, std::string> SpellCorrector::unicode2chemAsciiMap = {
 	{"ξ","..."},
 	{"π","..."},
 	{"ρ","..."},
-	{"σ","sigma"},
+	{"σ","O"},
 	{"τ","..."},
 	{"φ","..."},
 	{"ψ","..."},
@@ -503,36 +449,61 @@ int SpellCorrector::getWordType(const std::string& _word) {
 
 string SpellCorrector::getValidWord(const vector<vector<string>>& _src,
 	int start, int end) {
-	vector<int> scores;
-	int cmplen;
-	int score, baseScore;
-	const size_t targetlen = end - start + 1;
+	/*输入可能和多个有相同前缀的单词匹配*/
+	/*输入可能和长度相同部分字母不同的单词匹配*/
+	/*输入的单词天然是加权的*/
+	map<string, double> scores;
+	double reduced;
+	int coveredLen;
+	double score, baseScore;
+	const size_t objLen = end - start + 1;
 	for (size_t i = 0; i < validWords.size(); i++) {
-		string& word = validWords.at(i);
-		cmplen = std::min(word.length(), targetlen);
-		score = 0;
-		baseScore = 100;
-		if (targetlen == cmplen) {
-			score += baseScore;
+		const string& dicWord = validWords.at(i);
+		coveredLen = std::min(dicWord.length(), objLen);
+		if (coveredLen < objLen) {
+			continue;
 		}
-		for (int j = 0; j < cmplen; j++) {
+		score = 0;
+		baseScore = 100.0 / coveredLen;
+		//if (objLen == coveredLen) {
+		//	score += baseScore;
+		//}
+		for (int j = 0; j < coveredLen; j++) {
+			reduced = 1.0;
 			for (auto& k : _src.at(j + start)) {
-				if (k.length() == 1 && k.at(0) == word.at(j)) {
-					score += baseScore;
+				if (k == "")
+					reduced -= 0.05;
+				if (k.length() == 1 && k.at(0) == dicWord.at(j)) {
+					score += baseScore * reduced;
 					break;
 				}
 			}
 		}
-		scores.push_back(score);
-	}
-	size_t index = 0;
-	for (size_t i = 1; i < scores.size(); i++) {
-		if (scores.at(index) < scores.at(i)) {
-			index = i;
+		string curPrefix = dicWord.substr(0, objLen);
+		auto it = scores.find(curPrefix);
+		if (it == scores.end()) {
+			scores[curPrefix] = score;
+		}
+		else {
+			it->second += 0.5;
 		}
 	}
-	cout << "validWords.at(index)=" << validWords.at(index) << endl;
-	return validWords.at(index).substr(0, targetlen);
+	map<string, double>::iterator it = scores.begin();
+	for (auto i = scores.begin(); i != scores.end(); i++) {
+		if (i->second > it->second) {
+			it = i;
+		}
+	}
+	if (it->second > 80) {
+		return it->first;
+	}
+	else {
+		string tmp;
+		for (int i = start; i <= end; i++) {
+			tmp += _src[i].at(0);
+		}
+		return tmp;
+	}
 }
 
 void SpellCorrector::getBestResult(const vector<vector<string>>& _src,

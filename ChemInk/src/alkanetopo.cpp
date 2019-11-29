@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "alkanetopo.h"
 #include <cmath>
 #include <algorithm>
@@ -191,6 +192,7 @@ void AlkaneTopo::getAlkaneTopo() {
 }
 
 void AlkaneTopo::getAlkaneTopo(vector<string>& result, vector<int>& targetCarbonNum) {
+	result.clear();
 	setNumberOfCarbon(targetCarbonNum.back());
 	if (numberOfCarbon == 1) {										//  一个结点
 		newStructs = new vector<vector<vector<unsigned char>>>();
@@ -206,6 +208,7 @@ void AlkaneTopo::getAlkaneTopo(vector<string>& result, vector<int>& targetCarbon
 		newStructs->at(0).at(1).push_back(2);						//  C1-C2
 		newStructs->at(0).at(2).push_back(1);						//  C2-C1
 		isomerCounter[2] = 1;
+		result.push_back("C(C)");
 		return;
 	}
 	if (targetCarbonNum.at(0) == 1) {//  传入的数组必然有序
@@ -258,15 +261,15 @@ void AlkaneTopo::getAlkaneTopo(vector<string>& result, vector<int>& targetCarbon
 
 
 bool AlkaneTopo::setNumberOfCarbon(int n) {
+	numberOfCarbon = n;
 	if (n < 3 || n > 2500)
 		return false;
-	numberOfCarbon = n;
 	isomerCounter.resize(n + 1, 0);
 	isomerCounter[1] = isomerCounter[2] = 1;
 	return true;
 }
 
-int AlkaneTopo::getNumberOfCarbon() const{
+int AlkaneTopo::getNumberOfCarbon() const {
 	return numberOfCarbon;
 }
 
