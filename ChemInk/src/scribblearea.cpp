@@ -186,6 +186,7 @@ void ScribbleArea::mouseReleaseEvent(QMouseEvent* event) {
 			rs.popStroke(curPos);
 			rs.popStroke(rubberPath);
 			repaintRawScript();
+			break;
 		}
 		emit updateInScribbleArea();
 		break;
