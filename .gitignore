@@ -1,6 +1,7 @@
 .vs/
 x64/
 ChemInk/x64/
+ChemInk/GeneratedFiles/
 ChemInk/Resources/
 *.aps
 *.dll

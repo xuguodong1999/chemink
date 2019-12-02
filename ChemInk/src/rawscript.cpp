@@ -7,7 +7,7 @@ RawScript::RawScript() :panel(nullptr) {
 			"/data/densenet-chdsbw.json").toStdString().c_str(), 78);
 	detector.load(
 		(QApplication::applicationDirPath() +
-			"/data/chardetector-yolov3-tiny_226000.weights").toStdString().c_str(),
+			"/data/chardetector-yolov3-tiny.weights").toStdString().c_str(),
 			(QApplication::applicationDirPath() +
 				"/data/chardetector-yolov3-tiny.cfg").toStdString().c_str());
 	//  opencv4.1.1的dnn网络加载还是懒加载，即在第一次运行的时候加载
@@ -99,6 +99,7 @@ char RawScript::diff(const QRectF& a, const QRectF& b) {
 
 	return 'l';
 }
+
 const std::vector<std::vector<std::string>>& RawScript::recognize() {
 	results.clear();
 	if (yoloImg.size() != panel->size()) {

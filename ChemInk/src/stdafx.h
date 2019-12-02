@@ -44,7 +44,7 @@ $(SolutionDir)ChemInk/third_party/eigen3.3.7;$(SolutionDir)ChemInk/third_party/j
 #define LINK_CV411
 
 //  链接Qt5静态库
-//  #define LINK_STATIC_QT5
+//#define LINK_STATIC_QT5
 
 //  申请安卓权限
 //  #define ANDROID_BUILDBY_WIN_QMAKE

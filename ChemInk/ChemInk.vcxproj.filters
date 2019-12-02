@@ -95,6 +95,9 @@
     <ClInclude Include="src\chembalancer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="src\chemink.qrc">
@@ -171,5 +174,8 @@
     <ClCompile Include="src\browser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ChemInk.ico" />
   </ItemGroup>
 </Project>

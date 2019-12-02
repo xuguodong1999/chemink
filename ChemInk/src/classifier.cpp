@@ -10,7 +10,7 @@ Classifier::Classifier() {
 Classifier::~Classifier() {
 
 }
-
+#define DEBUG
 void Classifier::predict(
 	const std::vector<QImage>& _imgs
 ) {
