@@ -143,7 +143,7 @@ const std::vector<std::vector<std::string>>& RawScript::recognize() {
 			}
 		}
 		if (counter <= i.elementCount() * K_leak) {
-			leakedScriptIndices.push_back(&i);
+			leakedScriptIndices.emplace_back(&i);
 		}
 	}
 	for (size_t i = 0; i < leakedScriptIndices.size(); i++) {
@@ -222,9 +222,9 @@ const std::vector<std::vector<std::string>>& RawScript::recognize() {
 					continue;
 				}
 				for (auto& k : SpellCorrector::similarWords.at(index)) {
-					srcWords.at(i).push_back(k);
+					srcWords.at(i).emplace_back(k);
 				}
-				srcWords.at(i).push_back("");
+				srcWords.at(i).emplace_back("");
 			}
 			else {
 				break;
@@ -253,7 +253,7 @@ const std::vector<std::vector<std::string>>& RawScript::recognize() {
 	results.resize(srcWords.size() + 1);
 	for (size_t i = 0; i < srcWords.size(); i++) {
 		for (auto& j : srcWords.at(i)) {
-			results[i + 1].push_back(j);
+			results[i + 1].emplace_back(j);
 		}
 	}
 	srcWords.clear();

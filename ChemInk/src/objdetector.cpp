@@ -83,9 +83,9 @@ void ObjDetector::nonMaximumSuppression(const Mat& frame, const vector<Mat>& out
 				height = (int)(data[3] * frame.rows);
 				left = centerX - width / 2;
 				top = centerY - height / 2;
-				classIds.push_back(classIdPoint.x);
-				confidences.push_back((float)confidence);
-				boxes.push_back(Rect(left, top, width, height));
+				classIds.emplace_back(classIdPoint.x);
+				confidences.emplace_back((float)confidence);
+				boxes.emplace_back(Rect(left, top, width, height));
 			}
 		}
 	}

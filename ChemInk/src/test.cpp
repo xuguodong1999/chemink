@@ -21,10 +21,11 @@ using namespace std;
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
 #endif // STATIC_BUILDBY_MSVC
 
+  #define TEST_ALKANE
 //  #define TEST_BABEL
 //  #define TEST_GL
 //  #define TEST_APP
-#define TEST_SCRIPT
+//  #define TEST_SCRIPT
 //  #define TEST_YOLO
 //  #define TEST_VBO //  ²âÊÔvboÄ£Ê½ fail
 //  #define TEST_EIGEN
@@ -47,8 +48,12 @@ int main(int argc, char* argv[]) {
 	}
 	if (-1 == _putenv(QString("BABEL_DATADIR=" + QApplication::applicationDirPath() + "/data").toStdString().c_str()))
 		return throwErrorBox("Error Message", "Fail to set BABEL_DATADIR!");
-
-#ifdef TEST_SCRIPT
+#ifdef TEST_ALKANE
+	int vfvf; cin >> vfvf;
+	AlkaneTopo topo;
+	topo.setNumberOfCarbon(vfvf);
+	topo.getAlkaneTopo();
+#elif defined(TEST_SCRIPT)
 	ScribbleArea w;
 	w.resize(getDesktopSize() / 1.5);
 	w.show();

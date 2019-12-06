@@ -49,7 +49,7 @@ void ScribbleView::mousePressEvent(QMouseEvent* event) {
 	case ScribbleScene::Mode_Pen:
 		//hide();
 		curPointsData.clear();
-		curPointsData.push_back(event->pos());
+		curPointsData.emplace_back(event->pos());
 		QGraphicsView::mousePressEvent(event);
 		break;
 	case ScribbleScene::Mode_Rect:
@@ -81,7 +81,7 @@ void ScribbleView::mouseMoveEvent(QMouseEvent* event) {
 	switch (myScene->mode) {
 	case ScribbleScene::Mode_Pen:
 		if (mousePressed) {
-			curPointsData.push_back(event->pos());
+			curPointsData.emplace_back(event->pos());
 			QGraphicsView::mouseMoveEvent(event);
 		}
 		break;

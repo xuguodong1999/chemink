@@ -5,7 +5,14 @@
 #include <iostream>
 #include <ctime>
 using namespace std;
+#pragma execution_character_set("GBK")
+UnrootedTree::UnrootedTree() :utree(nullptr), n(0), nodeOfMaxSubTree(0x3f3f3f3f) { ; }
 
+UnrootedTree::~UnrootedTree() {
+	utree = nullptr;
+	son1.clear();		son2.clear();
+	partSeq.clear();	allSeq.clear();
+}
 
 void UnrootedTree::dfsCollectSizeOfSon(int x, int father) {		//  »ñÈ¡×ÓÊ÷´óÐ¡ ÕÒÖØÐÄ
 	son1[x] = 1, son2[x] = 0;
@@ -17,8 +24,13 @@ void UnrootedTree::dfsCollectSizeOfSon(int x, int father) {		//  »ñÈ¡×ÓÊ÷´óÐ¡ ÕÒ
 		son1[x] += son1[p];
 		son2[x] = max(son2[x], son1[p]);
 	}
-	son2[x] = max(son2[x], n - son1[x]);
-	nodeOfMaxSubTree = max(son2[x], nodeOfMaxSubTree);
+	//  ÁÚ½Ó±í´Ó1¿ªÊ¼£¬Ë÷Òýµ½ n - 1
+	//  ±íµÄ´óÐ¡ÊÇ n - 1, size() = n
+	son2[x] = max(son2[x], n - 1 - son1[x]);
+	//  ÏÂÒ»ÐÐ´úÂëÊÇ´íµÄ£¬¿ÉÊÇÎªÊ²Ã´½á¹ûÍêÈ«ÕýÈ·£¿
+	//  Ó¦¸ÃÍê³ÉÕâ¸öº¯ÊýÖ®ºó£¬Í³¼Æson2»ñÈ¡ÓµÓÐ×îÐ¡½ÚµãµÄ×î´ó×ÓÊ÷
+	//  ÒÑÐÞ¸´Ëã·¨£¬¿ÉÊÇÉÏÃæµÄÎÊÌâÃ»ÏëÃ÷°×
+	//  nodeOfMaxSubTree = max(son2[x], nodeOfMaxSubTree);
 }
 
 void UnrootedTree::dfsGetSeq(int x, int father) {
@@ -40,23 +52,25 @@ void UnrootedTree::dfsGetSeq(int x, int father) {
 	allSeq[x] += ")";
 }
 
-UnrootedTree::UnrootedTree() :utree(nullptr), n(0), nodeOfMaxSubTree(-1) { ; }
-
-UnrootedTree::~UnrootedTree() {
-	utree = nullptr;
-	son1.clear();		son2.clear();
-	partSeq.clear();	allSeq.clear();
-}
-
 string UnrootedTree::getSeq(vector<vector<unsigned char>>& _utree) {	//  »ñÈ¡À¨ºÅÐòÁÐ
 	utree = &_utree;
 	n = utree->size();							//  ±ÈÌ¼Ô­×ÓÊý¶àÒ»¸ö 0,1-n
+	//cout << "n =" << n-1 << endl;
+	//display();
 	son1.resize(n, 0);			son2.resize(n, 0);
 	partSeq.resize(n, "");		allSeq.resize(n, "");
-	nodeOfMaxSubTree = -1;						//  ×î´ó×ÓÊ÷µÄ½ÚµãÊý
 	dfsCollectSizeOfSon(1, 0);
+	nodeOfMaxSubTree = 0x3f3f3f3f;						//  ×î´ó×ÓÊ÷µÄ½ÚµãÊý
+	//for (size_t i = 1; i < n; i++) {
+	//	cout << i << "=" << son2[i] << endl;
+	//}
+	for (int i = 1; i < n; i++) {
+		nodeOfMaxSubTree = min(nodeOfMaxSubTree, son2[i]);
+	}
+	//cout << "max subtree node num =" << nodeOfMaxSubTree << endl;
+	//system("pause");
 	string finalSeq = "";
-	for (int i = 1; i <= n; i++) {				//  ´¦ÀíÁ½¸öÖØÐÄ
+	for (int i = 1; i < n; i++) {				//  ´¦ÀíÁ½¸öÖØÐÄ
 		if (son2[i] == nodeOfMaxSubTree) {		//  µÈÓÚ×î´ó×ÓÊ÷µÄ½ÚµãÊý
 			dfsGetSeq(i, 0);
 			if (allSeq[i] > finalSeq)
@@ -67,20 +81,6 @@ string UnrootedTree::getSeq(vector<vector<unsigned char>>& _utree) {	//  »ñÈ¡À¨º
 	son1.clear();		son2.clear();
 	partSeq.clear();	allSeq.clear();
 	return finalSeq;
-}
-
-int UnrootedTree::getMaxSubTree() {
-	return nodeOfMaxSubTree;
-}
-
-vector<int>* UnrootedTree::getSubTreeSize(vector<vector<unsigned char>>& _utree) {
-	utree = &_utree;
-	n = utree->size();							//  ±ÈÌ¼Ô­×ÓÊý¶àÒ»¸ö 0,1-n
-	son1.resize(n, 0);			son2.resize(n, 0);
-	partSeq.resize(n, "");		allSeq.resize(n, "");
-	nodeOfMaxSubTree = -1;						//  ×î´ó×ÓÊ÷µÄ½ÚµãÊý
-	dfsCollectSizeOfSon(1, 0);
-	return &son2;
 }
 
 void UnrootedTree::clearSubTreeSize() {
@@ -94,10 +94,10 @@ void UnrootedTree::display() {
 		cout << "Î´³õÊ¼»¯ÁÚ½Ó±í£¬ÎÞ·¨´òÓ¡" << endl;
 		return;
 	}
-	for (size_t i = 0; i < utree->size(); i++) {
+	for (size_t i = 1; i < utree->size(); i++) {
 		cout << i << " --> ";
 		for (size_t j = 0; j < utree->at(i).size(); j++) {
-			cout << utree->at(i).at(j) << ", ";
+			cout << (int)utree->at(i).at(j) << ", ";
 		}
 		cout << endl;
 	}
@@ -123,6 +123,7 @@ AlkaneTopo::~AlkaneTopo() {
 	isomers.clear();
 	isomerCounter.clear();
 }
+
 static inline bool hasTargetNum(vector<int>& targetNum, int a) {
 	for (int i : targetNum) {
 		if (a == i)
@@ -130,6 +131,7 @@ static inline bool hasTargetNum(vector<int>& targetNum, int a) {
 	}
 	return false;
 }
+
 void AlkaneTopo::getAlkaneTopo() {
 	if (numberOfCarbon == 1) {										//  Ò»¸ö½áµã
 		newStructs = new vector<vector<vector<unsigned char>>>();
@@ -141,8 +143,8 @@ void AlkaneTopo::getAlkaneTopo() {
 		newStructs = new vector<vector<vector<unsigned char>>>();
 		newStructs->resize(1);
 		newStructs->at(0).resize(3);								//  C2µÄµÚÒ»ÖÖÒ²ÊÇÎ¨Ò»Ò»ÖÖÍØÆËÁ¬½Ó
-		newStructs->at(0).at(1).push_back(2);						//  C1-C2
-		newStructs->at(0).at(2).push_back(1);						//  C2-C1
+		newStructs->at(0).at(1).emplace_back(2);						//  C1-C2
+		newStructs->at(0).at(2).emplace_back(1);						//  C2-C1
 		isomerCounter[2] = 1;
 		return;
 	}
@@ -150,8 +152,8 @@ void AlkaneTopo::getAlkaneTopo() {
 	lastStructs = new vector<vector<vector<unsigned char>>>();			//  Îª¼ÇÂ¼ËùÓÐi-1¸öÌ¼µÄ½á¹¹¿ª±Ù¿Õ¼ä
 	lastStructs->resize(1);										//  C2Ö»ÓÐÒ»¸öÍØÆË½á¹¹ Ì¼Ô­×Ó±àºÅ´Ó1¿ªÊ¼
 	lastStructs->at(0).resize(3);								//  C2µÄµÚÒ»ÖÖÒ²ÊÇÎ¨Ò»Ò»ÖÖÍØÆËÁ¬½Ó
-	lastStructs->at(0).at(1).push_back(2);						//  C1-C2
-	lastStructs->at(0).at(2).push_back(1);						//  C2-C1
+	lastStructs->at(0).at(1).emplace_back(2);						//  C1-C2
+	lastStructs->at(0).at(2).emplace_back(1);						//  C2-C1
 	string tmp;
 	clock_t start, end;
 	for (int i = 3; i <= numberOfCarbon; i++) {
@@ -164,18 +166,19 @@ void AlkaneTopo::getAlkaneTopo() {
 				curStruct.clear();
 				curStruct = lastStructs->at(j);					//  ¼ÇÏÂÔ­À´µÄ½á¹¹
 				curStruct.resize(i + 1);
-				curStruct.at(k).push_back(i);					//  °ÑÐÂÔ­×ÓÁ¬µ½kºÅÌ¼
-				curStruct.at(i).push_back(k);
+				curStruct.at(k).emplace_back(i);					//  °ÑÐÂÔ­×ÓÁ¬µ½kºÅÌ¼
+				curStruct.at(i).emplace_back(k);
 				tmp = utreeFunc.getSeq(curStruct);				//  »ñÈ¡curStructÎÞ¸ùÊ÷µÄÀ¨ºÅÐòÁÐ
 				//if (isomers.find(tmp) == isomers.end()) {		//  ÊÇÒ»¸öÃ»ÓÐ±»¼ÇÂ¼¹ýµÄ½á¹¹ ´æÈëËùÓÐÐÂ½á¹¹ÖÐ
 				//	isomerCounter.at(i)++;						//  i¸öÌ¼·Ç¹âÑ§Í¬·ÖÒì¹¹ÌåÊýÁ¿¼ÓÒ»
 				//	isomers[tmp] = newStructs->size();			//  ¼Ó½øÐÂ½á¹¹ÁÐ±í
-				//	newStructs->push_back(curStruct);
+				//	newStructs->emplace_back(curStruct);
 				//}
+				//  cout << tmp << endl;
 				if (isomers.insert(tmp).second == true) {
 					isomerCounter.at(i)++;
-					newStructs->push_back(curStruct);
-					cout << utreeFunc.getSMILES(curStruct) << endl;
+					newStructs->emplace_back(curStruct);
+					//cout << utreeFunc.getSMILES(curStruct) << endl;
 				}
 			}
 		}
@@ -198,32 +201,32 @@ void AlkaneTopo::getAlkaneTopo(vector<string>& result, vector<int>& targetCarbon
 		newStructs = new vector<vector<vector<unsigned char>>>();
 		newStructs->resize(2);										//  ·µ»Ø¿ÕÁÚ½Ó±í
 		isomerCounter[1] = 1;
-		result.push_back("C");
+		result.emplace_back("C");
 		return;
 	}
 	else if (numberOfCarbon == 2) {									//  Á½¸ö½áµã
 		newStructs = new vector<vector<vector<unsigned char>>>();
 		newStructs->resize(1);
 		newStructs->at(0).resize(3);								//  C2µÄµÚÒ»ÖÖÒ²ÊÇÎ¨Ò»Ò»ÖÖÍØÆËÁ¬½Ó
-		newStructs->at(0).at(1).push_back(2);						//  C1-C2
-		newStructs->at(0).at(2).push_back(1);						//  C2-C1
+		newStructs->at(0).at(1).emplace_back(2);						//  C1-C2
+		newStructs->at(0).at(2).emplace_back(1);						//  C2-C1
 		isomerCounter[2] = 1;
-		result.push_back("C(C)");
+		result.emplace_back("C(C)");
 		return;
 	}
 	if (targetCarbonNum.at(0) == 1) {//  ´«ÈëµÄÊý×é±ØÈ»ÓÐÐò
-		result.push_back("C");
+		result.emplace_back("C");
 	}
 	if (targetCarbonNum.at(0) == 2 ||
 		(targetCarbonNum.size() > 1 && targetCarbonNum.at(1) == 2)) {
-		result.push_back("C(C)");
+		result.emplace_back("C(C)");
 	}
 	//  Èý¸ö¼°ÒÔÉÏ½áµã£¬µü´ú¼ÆËã
 	lastStructs = new vector<vector<vector<unsigned char>>>();			//  Îª¼ÇÂ¼ËùÓÐi-1¸öÌ¼µÄ½á¹¹¿ª±Ù¿Õ¼ä
 	lastStructs->resize(1);										//  C2Ö»ÓÐÒ»¸öÍØÆË½á¹¹ Ì¼Ô­×Ó±àºÅ´Ó1¿ªÊ¼
 	lastStructs->at(0).resize(3);								//  C2µÄµÚÒ»ÖÖÒ²ÊÇÎ¨Ò»Ò»ÖÖÍØÆËÁ¬½Ó
-	lastStructs->at(0).at(1).push_back(2);						//  C1-C2
-	lastStructs->at(0).at(2).push_back(1);						//  C2-C1
+	lastStructs->at(0).at(1).emplace_back(2);						//  C1-C2
+	lastStructs->at(0).at(2).emplace_back(1);						//  C2-C1
 	string tmp;
 	bool allowAdd = false;
 	for (int i = 3; i <= numberOfCarbon; i++) {
@@ -237,17 +240,17 @@ void AlkaneTopo::getAlkaneTopo(vector<string>& result, vector<int>& targetCarbon
 				curStruct.clear();
 				curStruct = lastStructs->at(j);					//  ¼ÇÏÂÔ­À´µÄ½á¹¹
 				curStruct.resize(i + 1);
-				curStruct.at(k).push_back(i);					//  °ÑÐÂÔ­×ÓÁ¬µ½kºÅÌ¼
-				curStruct.at(i).push_back(k);
+				curStruct.at(k).emplace_back(i);					//  °ÑÐÂÔ­×ÓÁ¬µ½kºÅÌ¼
+				curStruct.at(i).emplace_back(k);
 				tmp = utreeFunc.getSeq(curStruct);				//  »ñÈ¡curStructÎÞ¸ùÊ÷µÄÀ¨ºÅÐòÁÐ
 				if (isomers.insert(tmp).second == true) {
 					cc++;
 					if (cc > 2000)
 						goto L;
 					isomerCounter.at(i)++;
-					newStructs->push_back(curStruct);
+					newStructs->emplace_back(curStruct);
 					if (allowAdd)
-						result.push_back(utreeFunc.getSMILES(curStruct));
+						result.emplace_back(utreeFunc.getSMILES(curStruct));
 				}
 			}
 		}
@@ -259,18 +262,14 @@ void AlkaneTopo::getAlkaneTopo(vector<string>& result, vector<int>& targetCarbon
 	}
 }
 
-
 bool AlkaneTopo::setNumberOfCarbon(int n) {
 	numberOfCarbon = n;
+	//  cout << "AlkaneTopo::setNumberOfCarbon : n=" << n << endl;
 	if (n < 3 || n > 2500)
 		return false;
 	isomerCounter.resize(n + 1, 0);
 	isomerCounter[1] = isomerCounter[2] = 1;
 	return true;
-}
-
-int AlkaneTopo::getNumberOfCarbon() const {
-	return numberOfCarbon;
 }
 
 const vector<vector<unsigned char>>* AlkaneTopo::getCurStruct() {
@@ -302,10 +301,13 @@ string UnrootedTree::getSMILES(vector<vector<unsigned char>>& _utree) {	//  »ñÈ¡
 	n = utree->size();							//  ±ÈÌ¼Ô­×ÓÊý¶àÒ»¸ö 0,1-n
 	son1.resize(n, 0);			son2.resize(n, 0);
 	partSeq.resize(n, "");		allSeq.resize(n, "");
-	nodeOfMaxSubTree = -1;						//  ×î´ó×ÓÊ÷µÄ½ÚµãÊý
 	dfsCollectSizeOfSon(1, 0);
+	nodeOfMaxSubTree = 0x3f3f3f3f;						//  ×î´ó×ÓÊ÷µÄ½ÚµãÊý
+	for (int i = 1; i < n; i++) {
+		nodeOfMaxSubTree = min(nodeOfMaxSubTree, son2[i]);
+	}
 	string finalSeq = "";
-	for (int i = 1; i <= n; i++) {				//  ´¦ÀíÁ½¸öÖØÐÄ
+	for (int i = 1; i < n; i++) {				//  ´¦ÀíÁ½¸öÖØÐÄ
 		if (son2[i] == nodeOfMaxSubTree) {		//  µÈÓÚ×î´ó×ÓÊ÷µÄ½ÚµãÊý
 			dfsGetSMILES(i, 0);
 			if (allSeq[i] > finalSeq)

@@ -21,10 +21,8 @@ public:
 	std::string getSeq(std::vector<std::vector<unsigned char>>& _utree);
 	//  获取按照SMILES格式表示的分子式
 	std::string getSMILES(std::vector<std::vector<unsigned char>>& _utree);
-	std::vector<int>* getSubTreeSize(std::vector<std::vector<unsigned char>>& _utree);
 	void clearSubTreeSize();
 	void display();
-	int getMaxSubTree();
 };
 
 class AlkaneTopo {
@@ -45,7 +43,6 @@ public:
 	void getAlkaneTopo();
 	void getAlkaneTopo(std::vector<std::string>& result, std::vector<int>& targetCarbonNum);
 	bool setNumberOfCarbon(int n);									//  设置并检查碳原子数
-	int getNumberOfCarbon()const;
 	const std::vector<std::vector<unsigned char>>* getCurStruct();			//  返回表示当前拓扑的邻接表地址
 };
 

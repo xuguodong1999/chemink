@@ -12,7 +12,7 @@ SpellCorrector::SpellCorrector() {
 	freader.open(QIODevice::ReadOnly | QIODevice::Text);
 	if (freader.isOpen()) {
 		while (!freader.atEnd()) {
-			validWords.push_back(freader.readLine().toStdString());
+			validWords.emplace_back(freader.readLine().toStdString());
 			validWords.back().pop_back();
 		}
 	}
@@ -376,7 +376,7 @@ vector<string> SpellCorrector::getResult(const vector<vector<string>>& _src) {
 		for (auto& i : _src.at(0)) {
 			int tmp = getWordType(i);
 			if (tmp == DIGIT || tmp == CAPITAL || tmp == LITTLE) {
-				result.push_back(i);
+				result.emplace_back(i);
 				return result;
 			}
 		}
@@ -511,13 +511,13 @@ void SpellCorrector::getBestResult(const vector<vector<string>>& _src,
 	result.clear();
 	vector<vector<string>> src;
 	for (auto& i : _src) {
-		src.push_back(vector<string>());
+		src.emplace_back(vector<string>());
 		for (auto& j : i) {
-			src.back().push_back(getChemAscii(j));
+			src.back().emplace_back(getChemAscii(j));
 		}
 	}
 	vector<int> divPos;
-	divPos.push_back(-1);
+	divPos.emplace_back(-1);
 	for (size_t i = 0; i < src.size(); i++) {
 		bool isDiv(false);
 		for (auto& j : src.at(i)) {
@@ -527,21 +527,21 @@ void SpellCorrector::getBestResult(const vector<vector<string>>& _src,
 			}
 		}
 		if (isDiv) {
-			divPos.push_back(i);
+			divPos.emplace_back(i);
 		}
 	}
-	divPos.push_back(src.size());
+	divPos.emplace_back(src.size());
 	cout << "divPos.size()=" << divPos.size() << endl;
 	int start, end;
 	for (size_t i = 1; i < divPos.size(); i++) {
 		start = divPos.at(i - 1) + 1; end = divPos.at(i) - 1;
 		if (start <= end) {
-			result.push_back(
+			result.emplace_back(
 				getValidWord(src, start, end)
 			);
 		}
 		if (i != divPos.size() - 1) {
-			result.push_back(src.at(divPos.at(i)).at(0));
+			result.emplace_back(src.at(divPos.at(i)).at(0));
 		}
 	}
 	/*for (auto& i : result) {

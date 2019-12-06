@@ -1183,7 +1183,7 @@ namespace chemfunction {
 		//  存入元素列表
 		eleList.clear();
 		for (i = 0; i < (int)matlist[0].block.size(); i++)
-			eleList.push_back(matlist[0].block[i]);
+			eleList.emplace_back(matlist[0].block[i]);
 		matlist.clear();
 #ifdef TESTCEI
 		cout << "物质解析完成，M(" << name << ") = " << getRelativeMolecureMass() << " g/mol" << endl;
@@ -1264,7 +1264,7 @@ namespace chemfunction {
 					return 0;
 				}
 				eletmp.amount = 1;
-				tmpnode.block.push_back(eletmp);
+				tmpnode.block.emplace_back(eletmp);
 				tmpnode.isNum = 0;
 				i = iend;
 			}
@@ -1281,7 +1281,7 @@ namespace chemfunction {
 				}
 				tmpnode.isNum = 1;
 			}
-			matlist.push_back(tmpnode);
+			matlist.emplace_back(tmpnode);
 		}
 		return 1;
 	}
@@ -1324,7 +1324,7 @@ namespace chemfunction {
 				coef = matlist[i + 1].num;
 			for (k = 0; k < (int)matlist[i].block.size(); k++) {	//  处理 matlist[i]
 				matlist[i].block[k].amount *= (head * coef);		//  修正元素系数
-				matlist[is].block.push_back(matlist[i].block[k]);	//  把这个Ele挂到阵列后面
+				matlist[is].block.emplace_back(matlist[i].block[k]);	//  把这个Ele挂到阵列后面
 			}
 			i++;
 			while (i <= j && matlist[i].isNum == 1)i++;				//  循环完成以后 matlist[i]是一个字母
@@ -1344,12 +1344,12 @@ namespace chemfunction {
 				coef = matlist[i + 1].num;
 			for (k = 0; k < (int)matlist[i].block.size(); k++) {
 				matlist[i].block[k].amount *= (head * coef);
-				tmp.block.push_back(matlist[i].block[k]);
+				tmp.block.emplace_back(matlist[i].block[k]);
 			}
 			i++;
 			while (i <= j && matlist[i].isNum == 1)i++;
 		}
-		tmp.compress(); matlist.clear(); matlist.push_back(tmp);
+		tmp.compress(); matlist.clear(); matlist.emplace_back(tmp);
 		return 1;
 	}
 
@@ -1485,7 +1485,7 @@ namespace chemfunction {
 		int start = 0;
 		while (i < len) {
 			if (content[i] < '0' || content[i] > '9') {
-				oRatioList.push_back(1);
+				oRatioList.emplace_back(1);
 				while (i != len && content[i] != '+' && content[i] != '=')i++;
 				i++;
 			}
@@ -1495,7 +1495,7 @@ namespace chemfunction {
 				while (content[i] >= '0' && content[i] <= '9')
 					ca[index++] = content[i++];
 				ca[index] = '\0';
-				oRatioList.push_back(atoi(ca));
+				oRatioList.emplace_back(atoi(ca));
 				content.erase(start, index);
 				len = (int)content.length();
 				i = i - index;
@@ -1526,16 +1526,16 @@ namespace chemfunction {
 		while (p != len) {
 			if (equation[p] == '+') {
 				if (is_reac)
-					mRList.push_back(mat);
+					mRList.emplace_back(mat);
 				else
-					mPList.push_back(mat);
+					mPList.emplace_back(mat);
 				mat.clear();
 			}
 			else if (equation[p] == '=') {
 				if (is_reac)
-					mRList.push_back(mat);
+					mRList.emplace_back(mat);
 				else
-					mPList.push_back(mat);
+					mPList.emplace_back(mat);
 				mat.clear();
 				is_reac = 0;
 				while (p != len - 1 && equation[p] == '=')p++;
@@ -1544,9 +1544,9 @@ namespace chemfunction {
 			else if (p == len - 1) {
 				mat.name += equation[p];
 				if (is_reac)
-					mRList.push_back(mat);
+					mRList.emplace_back(mat);
 				else
-					mPList.push_back(mat);
+					mPList.emplace_back(mat);
 				mat.clear();
 			}
 			else
@@ -1638,7 +1638,7 @@ namespace chemfunction {
 		//  反应物元素累加、排序、合并
 		for (int i = 0; i < (int)mRList.size(); i++) {
 			for (int j = 0; j < (int)mRList[i].eleList.size(); j++)
-				eRList.push_back(mRList[i].eleList[j]);
+				eRList.emplace_back(mRList[i].eleList[j]);
 		}
 		sort(eRList.begin(), eRList.end(), namelessthan);
 		for (int i = 0; i < (int)eRList.size() - 1; i++) {
@@ -1652,7 +1652,7 @@ namespace chemfunction {
 		//  生成物元素累加、排序、合并
 		for (int i = 0; i < (int)mPList.size(); i++) {
 			for (int j = 0; j < (int)mPList[i].eleList.size(); j++)
-				ePList.push_back(mPList[i].eleList[j]);
+				ePList.emplace_back(mPList[i].eleList[j]);
 		}
 		sort(ePList.begin(), ePList.end(), namelessthan);
 		for (int i = 0; i < (int)ePList.size() - 1; i++) {
@@ -1712,7 +1712,7 @@ namespace chemfunction {
 			if (!ie) {
 				redox.clear(); Fraction zero = 0;
 				for (i = 0; i < col; i++)
-					redox.push_back(zero);
+					redox.emplace_back(zero);
 				if (!getRedox()) {
 #ifdef TESTCEI
 					cout << "无法获得化合价信息以构造方程组，退出配平！" << endl;
@@ -1781,7 +1781,7 @@ namespace chemfunction {
 				if (success) {
 					ratioList.clear();
 					for (j = 1; j <= col; j++)
-						ratioList.push_back(resint[j]);
+						ratioList.emplace_back(resint[j]);
 					delete[] a; return 1;
 				}
 #ifdef TESTCEI
@@ -1789,7 +1789,7 @@ namespace chemfunction {
 #endif
 				delete[]a; return 0;
 			}
-			ratioList.push_back(resint[i]);
+			ratioList.emplace_back(resint[i]);
 		}
 		delete[]a;
 		return 1;

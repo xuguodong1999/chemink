@@ -277,7 +277,7 @@ void  Molecule::addBond(int _fromId, int _toId, float _level) {
 			return;
 		}
 	}
-	bonds.push_back(Bond(_fromId, _toId, _level));
+	bonds.emplace_back(Bond(_fromId, _toId, _level));
 }
 void Molecule::addAtom(float x, float y, float z, std::string& _elementName) {
 	if (_elementName.size() > 1) {
@@ -285,8 +285,8 @@ void Molecule::addAtom(float x, float y, float z, std::string& _elementName) {
 			_elementName.at(i) = tolower(_elementName.at(i));
 		}
 	}
-	//atoms.push_back(Atom(Point3D(x, y, z), _elementName));
-	atoms.push_back(Atom(Vector3d(x, y, z), _elementName));
+	//atoms.emplace_back(Atom(Point3D(x, y, z), _elementName));
+	atoms.emplace_back(Atom(Vector3d(x, y, z), _elementName));
 }
 void Molecule::display() {
 	for (size_t i = 0; i < atoms.size(); i++) {
