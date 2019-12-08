@@ -49,7 +49,7 @@ private:
 	Classifier classifier;
 	ObjDetector detector;
 	const QSize yoloBaseSize = QSize(512, 416);
-	const QSize fdeepBaseSize = QSize(32, 32);
+	const QSize fdeepBaseSize = QSize(64, 64);
 	const double K_leak = 0.5, K_allowIn = 0.1;
 	//  返回l、m、r，表示b在a的左侧、包含、在右侧
 	char diff(const QRectF& a, const QRectF& b);

@@ -4,7 +4,7 @@ using namespace std;
 RawScript::RawScript() :panel(nullptr) {
 	classifier.load(
 		(QApplication::applicationDirPath() +
-			"/data/densenet-chdsbw.json").toStdString().c_str(), 78);
+			"/data/DenseNet-78-64x64.json").toStdString().c_str(), 78);
 	detector.load(
 		(QApplication::applicationDirPath() +
 			"/data/chardetector-yolov3-tiny.weights").toStdString().c_str(),
@@ -168,7 +168,7 @@ const std::vector<std::vector<std::string>>& RawScript::recognize() {
 			}
 		}
 	);
-	fdeepImgs.resize(objRects.size(), QImage(fdeepBaseSize, QImage::Format::Format_RGB666));
+	fdeepImgs.resize(objRects.size(), QImage(fdeepBaseSize, QImage::Format::Format_Grayscale8));
 	for (auto& i : fdeepImgs) {
 		i.fill(Qt::white);
 	}

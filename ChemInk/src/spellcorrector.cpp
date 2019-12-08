@@ -51,7 +51,7 @@ int SpellCorrector::getCnnIndex(int outIndex) {
 		return 54;
 	case  9:
 		return 55;
-	case  10:case 31:// #ºÍH
+	case  10://case 31:// #ºÍH
 		return 56;
 	case  11:
 		return 57;
@@ -83,7 +83,7 @@ int SpellCorrector::getCnnIndex(int outIndex) {
 		return 42;
 	case  25:
 		return 63;
-		//case  26:
+		//case  26:// (¦Æ ¦Î)->3
 		//	return 20;
 	case  27:
 		return 26;
@@ -93,8 +93,8 @@ int SpellCorrector::getCnnIndex(int outIndex) {
 		return 17;
 	case  30:
 		return 64;
-		//case  31:
-		//	return 36;
+	case  31:
+		return 36;
 	case  32:
 		return 65;
 	case  33:
@@ -249,7 +249,7 @@ map<std::string, std::string> SpellCorrector::unicode2chemAsciiMap = {
 	{"£Ä","D"},
 	{"£Å","E"},
 	{"£Æ","F"},
-	{"£Ç","C"},
+	{"£Ç","G"},
 	{"£È","H"},
 	{"£É","I"},
 	{"£Ê","J"},
@@ -299,30 +299,30 @@ map<std::string, std::string> SpellCorrector::unicode2chemAsciiMap = {
 	{"£ú","z"},
 	{"£û","{"},
 	{"£ý","}"},
-	{"¦°","..."},
-	{"¦²","..."},
-	{"¦µ","..."},
-	{"¦·","..."},
-	{"¦¸","..."},
-	{"¦Á","alpha"},
-	{"¦Â","beta"},
-	{"¦Ã","..."},
+	{"¦°","W"},
+	{"¦²","E"},
+	{"¦µ","8"},
+	{"¦·","y"},
+	{"¦¸","0"},
+	{"¦Á","a"},
+	{"¦Â","B"},
+	{"¦Ã","v"},
 	{"¦Ä","8"},
-	{"¦Å","..."},
-	{"¦Æ","..."},
-	{"¦Ç","..."},
-	{"¦È","..."},
-	{"¦Ë","lambda"},
-	{"¦Ì","..."},
-	{"¦Î","..."},
-	{"¦Ð","..."},
-	{"¦Ñ","..."},
+	{"¦Å","E"},
+	{"¦Æ","E"},
+	{"¦Ç","9"},
+	{"¦È","0"},
+	{"¦Ë","x"},
+	{"¦Ì","u"},
+	{"¦Î","E"},
+	{"¦Ð","y"},
+	{"¦Ñ","p"},
 	{"¦Ò","O"},
-	{"¦Ó","..."},
-	{"¦Õ","..."},
-	{"¦×","..."},
-	{"¦Ø","..."},
-	{"¨’","nor"}
+	{"¦Ó","t"},
+	{"¦Õ","y"},
+	{"¦×","y"},
+	{"¦Ø","w"},
+	{"¨’","0"}
 };
 
 const vector<vector<std::string>> SpellCorrector::similarWords = {

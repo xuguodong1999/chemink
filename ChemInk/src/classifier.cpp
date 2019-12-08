@@ -30,8 +30,8 @@ void Classifier::predict(
 		}
 		else {
 			inputTensor.push_back({ tensor5_from_bytes(
-				input.convertToFormat(QImage::Format::Format_RGB666).constBits(),
-				w, h, 3) });
+				input.constBits(),
+				w, h, 1) });
 		}
 	}
 	predicts(inputTensor, outputTensor);
