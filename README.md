@@ -40,6 +40,8 @@ enconv -L zh_CN -x UTF-8/gb2312 ./ChemInk/src/\*.h
 
 3. 代码目前无法向android平台编译，没有解决OpenBabel和Glu的依赖问题
 
+4. sln解决方案里，只有x64-release被正确配置
+
 ## 一些链接
 
 [第三方库](./ChemInk/third_party/README.md)
