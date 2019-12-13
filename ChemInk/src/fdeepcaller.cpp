@@ -4,6 +4,7 @@ using namespace fdeep;
 #include <thread>
 #include <stdexcept>
 using namespace std;
+#pragma execution_character_set("UTF-8")
 
 FdeepCaller::FdeepCaller()
 	:loaded(false) {

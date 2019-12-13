@@ -1,11 +1,10 @@
-#include "stdafx.h"
 #include "alkanetopo.h"
 #include <cmath>
 #include <algorithm>
 #include <iostream>
 #include <ctime>
 using namespace std;
-#pragma execution_character_set("GBK")
+
 UnrootedTree::UnrootedTree() :utree(nullptr), n(0), nodeOfMaxSubTree(0x3f3f3f3f) { ; }
 
 UnrootedTree::~UnrootedTree() {
@@ -182,10 +181,10 @@ void AlkaneTopo::getAlkaneTopo() {
 				}
 			}
 		}
-		cout << "i=" << i << ", count=" << isomerCounter.at(i) << endl;
+		cout << "碳原子数 = " << i << "：\n异构体计数 = " << isomerCounter.at(i) << endl;
 		end = clock();
 		double endtime = (double)(end - start) / CLOCKS_PER_SEC;
-		cout << "生成完整拓扑结构用时:" << endtime << "秒" << endl;		//  s为单位
+		cout << "用时 = " << endtime << "s" << endl;		//  s为单位
 		start = end;
 		isomers.clear();										//  清掉i个碳的所有合法括号序列
 		delete lastStructs;										//  归还旧结构占用的空间

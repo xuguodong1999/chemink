@@ -1,13 +1,6 @@
 .vs/
 x64/
-ChemInk/x64/
-ChemInk/GeneratedFiles/
-ChemInk/Resources/
-*.aps
-*.dll
-*.lib
-*.exe
 *tmp*
-ChemInk.old/
-script/
-
+ChemInk/third_party/openbabel-2.4.1
+ChemInk/third_party/opencv-4.1.1
+release/

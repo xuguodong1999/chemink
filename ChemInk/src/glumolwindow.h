@@ -1,6 +1,13 @@
 #pragma once
-#include "stdafx.h"
+
 #include "molecule.h"
+#include <QMouseEvent>
+#include <QWheelEvent>
+#include <QGLWidget>
+#include <QPoint>
+#include <Eigen/Core>
+
+class GLUquadric;
 //  渲染一个模型需要的数据
 //  为不同封装程度的三维图形库设计专门的数据结构
 class GluMolecule {
@@ -28,7 +35,7 @@ public:
 	~GluMolWindow()override;
 	void createMol3d(const Molecule& _molecule);
 private:
-	GLUquadricObj* quadric;
+	GLUquadric* quadric;
 	GluMolecule* molecule;
 	double rX, rY, dZ;
 	QPoint lastPoint;
@@ -44,5 +51,4 @@ protected:
 	void initializeGL()override;
 	void paintGL()override;
 	void resizeGL(int width, int height)override;
-
 };

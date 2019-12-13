@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "browser.h"
 using namespace std;
+#pragma execution_character_set("UTF-8")
 
 LabelButton::LabelButton(QWidget* parent) :QLabel(parent) {
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);

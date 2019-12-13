@@ -1,7 +1,12 @@
-#include "stdafx.h"
 #include "glumolwindow.h"
+#include <Windows.h>
+#include <QApplication>
+#include <gl/GLU.h>
+#include <QGLWidget>
+#include <Eigen/Dense>
 using namespace std;
 using namespace Eigen;
+#pragma execution_character_set("UTF-8")
 
 static double angleVec3d(const Vector3d& v1, const Vector3d& v2) {
 	// a¡¤b=|a|*|b|*cos(angle)

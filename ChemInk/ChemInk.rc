@@ -69,10 +69,10 @@ BEGIN
             VALUE "FileDescription", "ChemInk 化学公式的手写分析与应用系统"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "ChemInk.exe"
-            VALUE "LegalCopyright", "Copyright (C) 2019 徐国栋@https://github.com/Xuguodong1999"
+            VALUE "LegalCopyright", "Copyright (C) 2019 徐国栋"
             VALUE "OriginalFilename", "ChemInk.exe"
             VALUE "ProductName", "ChemInk"
-            VALUE "ProductVersion", "1.0.0.1"
+            VALUE "ProductVersion", "1.0.0.2"
         END
     END
     BLOCK "VarFileInfo"

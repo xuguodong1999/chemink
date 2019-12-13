@@ -1,9 +1,11 @@
-#include "stdafx.h"
 #include "objdetector.h"
 #include <opencv2/opencv.hpp>
+#include <QDebug>
 using namespace std;
 using namespace cv;
+#pragma execution_character_set("UTF-8")
 
+//  #define DEBUG
 /* mat和Qt::QImage互相转化，
  * 代码出处： https://blog.csdn.net/weixin_38621214/article/details/85311048
  */
@@ -51,12 +53,15 @@ static Mat frame;
 void ObjDetector::predictSingle(const QImage& img) {
 	frame = qimage2mat(img);
 	Mat blob;
-	dnn::blobFromImage(frame, blob, 1 / 255.0, Size(img.width(), img.height()), Scalar(0, 0, 0), true, false);
+	dnn::blobFromImage(frame, blob, 1 / 255.0, 
+		Size(img.width(), img.height()), 
+		//Size(256,256),
+		Scalar(0, 0, 0), true, false);
 	net.setInput(blob);
 	vector<Mat> outs;
-	//time_t start = clock();
+	time_t start = clock();
 	net.forward(outs, outBlobNames);
-	//qDebug() << "net.forward用时" << (clock() - start) << " ms" << endl;
+	qDebug() << "net.forward用时" << (clock() - start) << " ms" << endl;
 	nonMaximumSuppression(frame, outs);
 }
 
@@ -99,6 +104,7 @@ void ObjDetector::nonMaximumSuppression(const Mat& frame, const vector<Mat>& out
 #ifdef DEBUG
 	if (indices.size() > 0) {
 		imshow("frame", frame);
+		waitKey(0);
 	}
 #endif // DEBUG
 }

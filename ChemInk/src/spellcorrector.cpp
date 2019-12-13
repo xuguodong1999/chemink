@@ -8,7 +8,7 @@ vector<string> SpellCorrector::validWords;
 
 SpellCorrector::SpellCorrector() {
 	validWords.clear();
-	QFile freader(":/Resources/dictionary.txt");
+	QFile freader(":/ChemInk/Resources/dictionary.txt");
 	freader.open(QIODevice::ReadOnly | QIODevice::Text);
 	if (freader.isOpen()) {
 		while (!freader.atEnd()) {
@@ -517,7 +517,7 @@ void SpellCorrector::getBestResult(const vector<vector<string>>& _src,
 		}
 	}
 	vector<int> divPos;
-	divPos.emplace_back(-1);
+	divPos.push_back(-1);
 	for (size_t i = 0; i < src.size(); i++) {
 		bool isDiv(false);
 		for (auto& j : src.at(i)) {
@@ -527,10 +527,10 @@ void SpellCorrector::getBestResult(const vector<vector<string>>& _src,
 			}
 		}
 		if (isDiv) {
-			divPos.emplace_back(i);
+			divPos.push_back((int)i);
 		}
 	}
-	divPos.emplace_back(src.size());
+	divPos.push_back((int)src.size());
 	cout << "divPos.size()=" << divPos.size() << endl;
 	int start, end;
 	for (size_t i = 1; i < divPos.size(); i++) {

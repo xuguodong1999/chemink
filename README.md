@@ -18,7 +18,7 @@
 
 ## 阶段性完结【演示】
 
-![结果演示](./结题考核演示.gif)
+![结果演示](./ChemInk/结题考核演示.gif)
 
 ## 关于这个仓库
 
@@ -44,5 +44,5 @@ enconv -L zh_CN -x UTF-8/gb2312 ./ChemInk/src/\*.h
 
 [第三方库](./ChemInk/third_party/README.md)
 
-[2019年3月的完整代码](./version-2019-3-2.src/README.md)
+[2019年3月的完整代码](./RectBasedDemo/README.md)
 

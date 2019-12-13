@@ -1,5 +1,9 @@
 #pragma once
-#include "stdafx.h"
+
+#include <Eigen/core>
+#include <iostream>
+#include <string>
+#include <vector>
 
 //  ******************  //
 //  no longer in use!

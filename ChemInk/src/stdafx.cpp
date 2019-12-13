@@ -1,4 +1,7 @@
 #include "stdafx.h"
+#include <QErrorMessage>
+#include <QApplication>
+#include <QDesktopWidget>
 
 int throwErrorBox(const char* windowTitle, const char* message) {
 	QErrorMessage dialog;
@@ -103,21 +106,6 @@ $(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;$(QTDIR)\p
 #pragma comment(lib,"qwebp.lib")
 #endif // LINK_STATIC_QT5
 
-#ifdef ANDROID_BUILDBY_WIN_QMAKE
-bool requestPermission(QString moduleName) {
-	QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission." + moduleName);
-	if (r == QtAndroid::PermissionResult::Denied) {
-		QtAndroid::requestPermissionsSync(QStringList() << "android.permission." + moduleName);
-		r = QtAndroid::checkPermission("android.permission." + moduleName);
-		if (r == QtAndroid::PermissionResult::Denied) {
-			return false;
-		}
-	}
-	return true;
-}
-#endif // ANDROID_BUILDBY_WIN_QMAKE
-
-//  非移动端允许使用gl库
 #ifndef ANDROID_BUILDBY_WIN_QMAKE
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")

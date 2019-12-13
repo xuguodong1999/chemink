@@ -1,15 +1,20 @@
-#include "stdafx.h"
 #include "rawscript.h"
+#include <QApplication>
+#include <QPainter>
+#include <QSize>
+#include <QDebug>
 using namespace std;
+#pragma execution_character_set("UTF-8")
+
 RawScript::RawScript() :panel(nullptr) {
 	classifier.load(
 		(QApplication::applicationDirPath() +
 			"/data/DenseNet-78-64x64.json").toStdString().c_str(), 78);
 	detector.load(
 		(QApplication::applicationDirPath() +
-			"/data/chardetector-yolov3-tiny.weights").toStdString().c_str(),
+			"/data/Yolov3-tiny-2019-10-3.weights").toStdString().c_str(),
 			(QApplication::applicationDirPath() +
-				"/data/chardetector-yolov3-tiny.cfg").toStdString().c_str());
+				"/data/Yolov3-tiny-2019-10-3.cfg").toStdString().c_str());
 	//  opencv4.1.1的dnn网络加载还是懒加载，即在第一次运行的时候加载
 	detector.predictSingle(QImage(yoloBaseSize, QImage::Format::Format_RGB888));
 
@@ -69,36 +74,36 @@ static vector<vector<string>> srcWords;
 
 //  返回l、m、r，表示b在a的左侧、包含、在右侧
 //  未完成/暂时废弃
-char RawScript::diff(const QRectF& a, const QRectF& b) {
-	//  TODO:完成这个函数
-	qreal aw(a.width()), ah(a.height()),
-		ax1(a.topLeft().x()), ay1(a.topLeft().y()),
-		ax2(a.topRight().x()), ay2(a.topRight().y()),
-		ax3(a.bottomLeft().x()), ay3(a.bottomLeft().y()),
-		ax4(a.bottomRight().x()), ay4(a.bottomRight().y()),
-		acentx(a.center().x()), acenty(a.center().y());
-	qreal bw(b.width()), bh(b.height()),
-		bx1(b.topLeft().x()), by1(b.topLeft().y()),
-		bx2(b.topRight().x()), by2(b.topRight().y()),
-		bx3(b.bottomLeft().x()), by3(b.bottomLeft().y()),
-		bx4(b.bottomRight().x()), by4(b.bottomRight().y()),
-		bcentx(b.center().x()), bcenty(b.center().y());
-	/*我很想把这堆参数扔进xgboost里面qaq*/
-	//  缩放阈值
-	qreal thresh(10);
-	qreal thresh_2(2 * thresh);
-	QRectF bigA(ax1 - thresh, ay1 - thresh, aw + thresh_2, ah + thresh_2);
-	QRectF bigB(bx1 - thresh, by1 - thresh, bw + thresh_2, bh + thresh_2);
-	if (bigA.contains(b) || bigB.contains(a))
-		return 'm';
-	//  比例阈值
-	qreal k = 0.1;
-	//  换行阈值
-	qreal lineWidth = panel->height() / 3;
-	//  左右判断
-
-	return 'l';
-}
+//char RawScript::diff(const QRectF& a, const QRectF& b) {
+//	//  TODO:完成这个函数
+//	qreal aw(a.width()), ah(a.height()),
+//		ax1(a.topLeft().x()), ay1(a.topLeft().y()),
+//		ax2(a.topRight().x()), ay2(a.topRight().y()),
+//		ax3(a.bottomLeft().x()), ay3(a.bottomLeft().y()),
+//		ax4(a.bottomRight().x()), ay4(a.bottomRight().y()),
+//		acentx(a.center().x()), acenty(a.center().y());
+//	qreal bw(b.width()), bh(b.height()),
+//		bx1(b.topLeft().x()), by1(b.topLeft().y()),
+//		bx2(b.topRight().x()), by2(b.topRight().y()),
+//		bx3(b.bottomLeft().x()), by3(b.bottomLeft().y()),
+//		bx4(b.bottomRight().x()), by4(b.bottomRight().y()),
+//		bcentx(b.center().x()), bcenty(b.center().y());
+//	/*我很想把这堆参数扔进xgboost里面qaq*/
+//	//  缩放阈值
+//	qreal thresh(10);
+//	qreal thresh_2(2 * thresh);
+//	QRectF bigA(ax1 - thresh, ay1 - thresh, aw + thresh_2, ah + thresh_2);
+//	QRectF bigB(bx1 - thresh, by1 - thresh, bw + thresh_2, bh + thresh_2);
+//	if (bigA.contains(b) || bigB.contains(a))
+//		return 'm';
+//	//  比例阈值
+//	qreal k = 0.1;
+//	//  换行阈值
+//	qreal lineWidth = panel->height() / 3;
+//	//  左右判断
+//
+//	return 'l';
+//}
 
 const std::vector<std::vector<std::string>>& RawScript::recognize() {
 	results.clear();

@@ -1,5 +1,4 @@
 #pragma once
-#include "stdafx.h"
 //  字符纠正
 #include "spellcorrector.h"
 //  目标检测
@@ -7,7 +6,10 @@
 //  单例分类
 #include "classifier.h"
 #include <QPainterPath>
+#include <QWidget>
 #include <QList>
+#include <QPixmap>
+
 //  利用Qt的容器做笔迹管理
 class RawScript :public QObject {
 	Q_OBJECT
@@ -52,7 +54,7 @@ private:
 	const QSize fdeepBaseSize = QSize(64, 64);
 	const double K_leak = 0.5, K_allowIn = 0.1;
 	//  返回l、m、r，表示b在a的左侧、包含、在右侧
-	char diff(const QRectF& a, const QRectF& b);
+	//  char diff(const QRectF& a, const QRectF& b);
 	QWidget* panel;
 	QPixmap* pixmap;
 	QPixmap blankImg;

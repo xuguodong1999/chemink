@@ -1,5 +1,5 @@
 #pragma once
-#include "stdafx.h"
+
 #include "fdeepcaller.h"
 #include <QImage>
 #include <vector>
@@ -18,4 +18,3 @@ public:
 private:
 	int outdim;
 };
-

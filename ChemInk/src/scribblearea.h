@@ -1,5 +1,4 @@
 #pragma once
-#include "stdafx.h"
 //  手写识别接口
 #include "rawscript.h"
 //  应用接口
@@ -20,7 +19,6 @@
 #include <QPen>
 
 // ScribbleArea仅维护像素画板，不提供任何矢量交互功能，不提供除像素橡皮和笔之外的任何画板工具，不提供undo、redo功能
-// 矢量画板由Qt的图形视图框架维护，具体由ScribbleView维护，提供所有画板功能，提供分子编辑功能
 class ScribbleArea : public QWidget {
 	//  ScribbleArea设计成组件的风格
 	Q_OBJECT
@@ -77,4 +75,3 @@ private:
 	int countCall;
 	bool allowIn;
 };
-

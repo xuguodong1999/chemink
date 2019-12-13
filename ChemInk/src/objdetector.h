@@ -1,7 +1,8 @@
 #pragma once
-#include "stdafx.h"
+
 #include <QImage>
 #include <opencv2/dnn.hpp>
+#include <vector>
 
 class ObjDetector {
 public:

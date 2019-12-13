@@ -1,7 +1,7 @@
 #pragma once
-#include "stdafx.h"
-#include <fdeep/fdeep.hpp>
 
+#include <fdeep/fdeep.hpp>
+#include <QObject>
 
 class FdeepCaller :public QObject {
 	Q_OBJECT

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
 #include <vector>
 #include <string>
 #include <set>

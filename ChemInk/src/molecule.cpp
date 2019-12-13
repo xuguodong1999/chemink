@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "molecule.h"
-
-#pragma execution_character_set("GB2312")
-
+#include <map>
+#include <QString>
 using namespace std;
 using namespace Eigen;
 

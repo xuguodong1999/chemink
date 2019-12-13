@@ -17,19 +17,25 @@
 ## 需要编译的库
 
 1. OpenBabel， 化学工具库，在本项目里提供分子力场，用于生成能量最小化的分子结构，\
-代码仓库：https://github.com/openbabel/openbabel\
-最低编译要求：跑通obgen模块
+代码仓库：https://github.com/openbabel/openbabel
 
-2. OpenCV， 计算机视觉库，在本项目里提供YoloV3-tiny目标检测模型的推理，\
+2. OpenCV>=4.1.1， 计算机视觉库，在本项目里提供YoloV3-tiny目标检测模型的推理，\
 代码仓库-opencv：https://github.com/opencv/opencv\
-代码仓库-opencv-contrib：https://github.com/opencv/opencv_contrib\
-最低编译要求：和 OpenCV Contrib 联合编译，跑通cv::dnn模块
+代码仓库-opencv-contrib：https://github.com/opencv/opencv_contrib
 
-3. Qt-5.13.1， c++ GUI 框架，在本项目里，提供所有前端界面，提供图像、音视频处理功能，\
-代码仓库：http://download.qt.io\
-建议编译方式：进行静态编译\
-代替方案：使用官网的预编译的动态链接库
+3. Qt>=5.12， c++ GUI 框架，在本项目里，提供所有前端界面，提供图像、音视频处理功能，\
+代码仓库：http://download.qt.io
 
-## 预编译的库（可选，是某些功能的冗余/更优实现）
+## MKLINK 脚本
 
-1. OpenVINO， 英特尔的深度学习库，曾在本项目里提供YoloV3-tiny目标检测模型的推理，仅支持intel-cpu，intel-gpu，intel-ncs2等计算设备，其中，在使用Myriad神经计算棒的情况下，几乎不消耗本机的算力，程序的CPU占用接近普通画板的水平
+[mklink_3rdparty.bat](./mklink_3rdparty.bat)
+
+1. 编辑mklink_3rdparty.bat文件，修改"C:\\3rdlib\\"为你的库目录前缀
+
+2. 以管理员身份在third_party下执行mklink_3rdparty.bat
+
+3. third_party已经包含以头文件形式使用的库，需额外导入opencv和openbabel
+
+## 目录组织
+
+[Structure.md](./Structure.md)

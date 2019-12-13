@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "classifier.h"
 #include <QThreadPool>
 using namespace fdeep;
@@ -10,7 +9,7 @@ Classifier::Classifier() {
 Classifier::~Classifier() {
 
 }
-#define DEBUG
+//#define DEBUG
 void Classifier::predict(
 	const std::vector<QImage>& _imgs
 ) {
@@ -34,7 +33,9 @@ void Classifier::predict(
 				w, h, 1) });
 		}
 	}
+	//time_t start = clock();
 	predicts(inputTensor, outputTensor);
+	//cout << _imgs.size() << ": " << clock() - start << " ms" << endl;
 	confidences.resize(_imgs.size());
 	for (size_t i = 0; i < confidences.size(); i++) {
 		confidences[i].resize(outdim);

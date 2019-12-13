@@ -1,10 +1,20 @@
 #pragma once
-#include "stdafx.h"
+
 #include "glumolwindow.h"
 #include "chembalancer.h"
 #include "spellcorrector.h"
 #include "alkanetopo.h"		//  饱和烷烃非光学同分异构体的拓扑生成
 #include "forcefield.h"		//  力场工具
+#include <QMap>
+#include <QList>
+#include <QLabel>
+#include <QWidget>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QToolButton>
+#include <QResizeEvent>
+#include <QCloseEvent>
+
 class LabelButton :public QLabel {
 	Q_OBJECT
 public:

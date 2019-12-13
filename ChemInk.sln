@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChemInk", "ChemInk\ChemInk.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scut_irac_process", "scut_irac_process\scut_irac_process.vcxproj", "{63053626-6D47-4654-908E-CDA2418E986F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RectBasedDemo", "RectBasedDemo\RectBasedDemo.vcxproj", "{8CE5591A-F055-472E-BF76-0BC03F6649D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,11 +19,19 @@ Global
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64.Build.0 = Debug|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.ActiveCfg = Release|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.Build.0 = Release|x64
+		{63053626-6D47-4654-908E-CDA2418E986F}.Debug|x64.ActiveCfg = Debug|x64
+		{63053626-6D47-4654-908E-CDA2418E986F}.Debug|x64.Build.0 = Debug|x64
+		{63053626-6D47-4654-908E-CDA2418E986F}.Release|x64.ActiveCfg = Release|x64
+		{63053626-6D47-4654-908E-CDA2418E986F}.Release|x64.Build.0 = Release|x64
+		{8CE5591A-F055-472E-BF76-0BC03F6649D6}.Debug|x64.ActiveCfg = Debug|x64
+		{8CE5591A-F055-472E-BF76-0BC03F6649D6}.Debug|x64.Build.0 = Debug|x64
+		{8CE5591A-F055-472E-BF76-0BC03F6649D6}.Release|x64.ActiveCfg = Release|x64
+		{8CE5591A-F055-472E-BF76-0BC03F6649D6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {03D672E4-D2E6-42F1-8AB8-63D3491F82BB}
+		SolutionGuid = {B9EC75B8-BCEF-4E1A-906D-57AEA918AA79}
 	EndGlobalSection
 EndGlobal

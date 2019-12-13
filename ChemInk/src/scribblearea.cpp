@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "scribblearea.h"
 #include <QPainter>
+#include <QApplication>
 using namespace std;
+#pragma execution_character_set("UTF-8")
 
 #define drawline(_from, _to) \
 	QPainter painter(instBuffer);\
@@ -24,9 +26,9 @@ using namespace std;
 	update(QRect(_from, _to).normalized().adjusted(-rad, -rad, +rad, +rad));
 
 #define BUTTON_STYLESHEET \
-	"QToolButton{ border-image:url(:/Resources/%1-476.png)}" \
-	"QToolButton:hover{border-image:url(:/Resources/%1-576.png)}" \
-	"QToolButton:pressed{border-image:url(:/Resources/%1-676.png)}"
+	"QToolButton{ border-image:url(:/ChemInk/Resources/%1-476.png)}" \
+	"QToolButton:hover{border-image:url(:/ChemInk/Resources/%1-576.png)}" \
+	"QToolButton:pressed{border-image:url(:/ChemInk/Resources/%1-676.png)}"
 
 ScribbleArea::ScribbleArea(QWidget* parent) :
 	isPen(true), justResized(false), QWidget(parent), instBuffer(new QPixmap(7680, 4320)),
@@ -54,7 +56,7 @@ ScribbleArea::ScribbleArea(QWidget* parent) :
 	connect(rubberBtn, &QToolButton::clicked,
 		this, [=](bool checked) {
 			isPen = false;
-			QPixmap pixmap(":/Resources/rubber-476.png");
+			QPixmap pixmap(":/ChemInk/Resources/rubber-476.png");
 			setCursor(QCursor(pixmap.scaled(50, 50), 20, 45));
 		}
 	);
@@ -63,7 +65,7 @@ ScribbleArea::ScribbleArea(QWidget* parent) :
 	connect(pencilBtn, &QToolButton::clicked,
 		this, [=](bool checked) {
 			isPen = true;
-			QPixmap pixmap(":/Resources/pencil-476.png");
+			QPixmap pixmap(":/ChemInk/Resources/pencil-476.png");
 			setCursor(QCursor(pixmap.scaled(50, 50), 0, 40));
 		}
 	);
