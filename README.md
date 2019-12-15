@@ -24,11 +24,11 @@
 
 1. 包含全部源码
 
-2. 包含densenet和yolov3-tiny的猴版权重文件（就是没有达到SOTA，比较low，要求不能写得很奔放）
+2. 包含densenet和yolov3-tiny的权重文件
 
-3. 不包含第三方库，请见[第三方库编译说明](./ChemInk/third_party/README.md)
+3. 不包含opencv和openbabel，请见[第三方库编译说明](./ChemInk/third_party/README.md)
 
-4. 不包含数据集和训练脚本
+4. 包含用于生成数据集的代码
 
 ## 一些备注
 
