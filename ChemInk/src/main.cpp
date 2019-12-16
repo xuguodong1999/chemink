@@ -27,6 +27,6 @@ int main(int argc, char* argv[]) {
 		return throwErrorBox("Error Message", "Fail to set BABEL_DATADIR!");
 	ScribbleArea w;
 	w.resize(getDesktopSize() / 1.5);
-	w.show();
+    w.show();
 	return app.exec();
 }

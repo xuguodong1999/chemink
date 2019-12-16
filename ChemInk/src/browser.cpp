@@ -119,8 +119,8 @@ void Browser::updatelabelText() {
 		if (SpellCorrector::getWordType(i) == SpellCorrector::EXPLICTCUT) {
 			btn->htmlText.append(i.c_str());
 		}
-		else {
-			btn->htmlText.append(chembalancer.addHtml(string(i)).c_str());
+        else {
+            btn->htmlText.append(chembalancer.addHtml(string(i)).c_str());
 		}
 		btn->htmlText.append("</h1></html>");
 		btn->setText(btn->htmlText);

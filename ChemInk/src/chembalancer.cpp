@@ -1991,6 +1991,6 @@ std::string ChemBalancer::balance(std::string& input) {
 	return result;
 }
 
-std::string ChemBalancer::addHtml(std::string& input) {
+std::string ChemBalancer::addHtml(std::string input) {
 	return chemfunction::addHtml(input);
 }

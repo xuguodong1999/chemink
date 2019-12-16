@@ -4,3 +4,4 @@ x64/
 ChemInk/third_party/openbabel-2.4.1
 ChemInk/third_party/opencv-4.1.1
 release/
+*.pro.user
