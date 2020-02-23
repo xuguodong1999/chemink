@@ -1,4 +1,8 @@
-# ChemInk 化学公式的手写分析与应用系统
+# ChemInk
+
+## 功能
+
+* 处理手写化学方程式，仅包含字符，不具备结构式处理能力
 
 ## 原理简述
 
@@ -20,31 +24,10 @@
 
 ![结果演示](./ChemInk/结题考核演示.gif)
 
-## 关于这个仓库
-
-1. 包含全部源码
-
-2. 包含densenet和yolov3-tiny的权重文件
-
-3. 不包含opencv和openbabel，请见[第三方库编译说明](./ChemInk/third_party/README.md)
-
-4. 包含用于生成数据集的代码
-
-## 一些备注
-
-1. 编码转换：VisualStudio要求国标码，类unix平台要求UTF-8编码，建议转换方法：\
-enconv -L zh_CN -x UTF-8/gb2312 ./ChemInk/src/\*.cpp \
-enconv -L zh_CN -x UTF-8/gb2312 ./ChemInk/src/\*.h
-
-2. 图形方面涉及glu，macOS需要额外安装freeglut，并且把涉及到的<GL/glu.h>改为<GL/freeglut.h>
-
-3. 代码目前无法向android平台编译，没有解决OpenBabel和Glu的依赖问题
-
-4. sln解决方案里，只有x64-release被正确配置
-
 ## 一些链接
 
 [第三方库](./ChemInk/third_party/README.md)
 
 [2019年3月的完整代码](./RectBasedDemo/README.md)
 
+[结构式识别系统设计](https://github.com/Xuguodong1999/COCR)
