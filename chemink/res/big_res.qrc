@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>model/char76.weights</file>
+        <file>model/char78_64x64.json</file>
+    </qresource>
+</RCC>

@@ -1,1 +1,0 @@
- mklink /D "./openbabel-2.4.1" "C:\3rdlib\openbabel-2.4.1" && mklink /D "./opencv-4.1.1" "C:\3rdlib\opencv-4.1.1"

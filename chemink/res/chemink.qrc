@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/cls-476.png</file>
+        <file>img/cls-576.png</file>
+        <file>img/cls-676.png</file>
+        <file>img/pencil-476.png</file>
+        <file>img/pencil-576.png</file>
+        <file>img/pencil-676.png</file>
+        <file>img/rubber-476.png</file>
+        <file>img/rubber-576.png</file>
+        <file>img/rubber-676.png</file>
+        <file>img/set-476.png</file>
+        <file>img/set-576.png</file>
+        <file>img/set-676.png</file>
+        <file>qt_zh_CN.qm</file>
+        <file>dictionary.txt</file>
+        <file>model/char76.cfg</file>
+    </qresource>
+</RCC>

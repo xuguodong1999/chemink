@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DrawingBoard</class>
+ <widget class="QWidget" name="DrawingBoard">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1080</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>方程式手写识别配平</string>
+  </property>
+  <widget class="QTextEdit" name="inputText">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1080</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>20</pointsize>
+     <italic>true</italic>
+    </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="outputText">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>520</y>
+     <width>1080</width>
+     <height>130</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>20</pointsize>
+     <italic>true</italic>
+    </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="keyButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>650</y>
+     <width>216</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>帮助</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="setButton">
+   <property name="geometry">
+    <rect>
+     <x>216</x>
+     <y>650</y>
+     <width>216</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>设置</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="testButton">
+   <property name="geometry">
+    <rect>
+     <x>432</x>
+     <y>650</y>
+     <width>216</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>复位</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="balanceButton">
+   <property name="geometry">
+    <rect>
+     <x>648</x>
+     <y>650</y>
+     <width>216</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>配平</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="exitButton">
+   <property name="geometry">
+    <rect>
+     <x>864</x>
+     <y>650</y>
+     <width>216</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>退出</string>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>keyButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>DrawingBoard</receiver>
+   <slot>openKeyBoard()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>95</x>
+     <y>692</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>83</x>
+     <y>719</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>testButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>DrawingBoard</receiver>
+   <slot>testSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>495</x>
+     <y>696</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>494</x>
+     <y>719</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>balanceButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>DrawingBoard</receiver>
+   <slot>balanceSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>823</x>
+     <y>693</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>835</x>
+     <y>776</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exitButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>DrawingBoard</receiver>
+   <slot>exitSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>942</x>
+     <y>705</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>944</x>
+     <y>789</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>setButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>DrawingBoard</receiver>
+   <slot>openSetBoard()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>351</x>
+     <y>695</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>354</x>
+     <y>804</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>openKeyBoard()</slot>
+  <slot>testSlot()</slot>
+  <slot>balanceSlot()</slot>
+  <slot>exitSlot()</slot>
+  <slot>openSetBoard()</slot>
+ </slots>
+</ui>

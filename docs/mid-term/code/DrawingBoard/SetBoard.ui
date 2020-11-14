@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SetBoard</class>
+ <widget class="QWidget" name="SetBoard">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>画板设置</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="s2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>矩形</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="s8">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>颜色</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="s5">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>文本</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="s7">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>截屏</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="s4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>直线</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="s1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>铅笔</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="s3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>椭圆</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="s6">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>载入</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QSpinBox" name="s10">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="s9">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>s1</sender>
+   <signal>clicked()</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>135</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>58</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>s2</sender>
+   <signal>clicked()</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>232</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>s3</sender>
+   <signal>clicked()</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode3()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>412</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>371</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>s4</sender>
+   <signal>clicked()</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode4()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>142</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>72</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>s5</sender>
+   <signal>clicked()</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode5()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>138</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>234</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>s6</sender>
+   <signal>clicked()</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode6()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>409</x>
+     <y>146</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>387</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>s7</sender>
+   <signal>clicked()</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode7()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>88</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>s9</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode9(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>422</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>s10</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode10(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>415</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>391</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>s8</sender>
+   <signal>clicked()</signal>
+   <receiver>SetBoard</receiver>
+   <slot>setMode8()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>268</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>252</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setMode1()</slot>
+  <slot>setMode2()</slot>
+  <slot>setMode3()</slot>
+  <slot>setMode4()</slot>
+  <slot>setMode5()</slot>
+  <slot>setMode6()</slot>
+  <slot>setMode7()</slot>
+  <slot>setMode8()</slot>
+  <slot>setMode9(int)</slot>
+  <slot>setMode10(int)</slot>
+ </slots>
+</ui>
