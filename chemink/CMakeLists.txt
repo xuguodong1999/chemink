@@ -9,13 +9,15 @@ qt5_add_resources(RES_FILES
 qt5_add_big_resources(BIG_RES_FILES ${CMAKE_CURRENT_SOURCE_DIR}/res/big_res.qrc)
 
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SRC_FILES)
-
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/balance SRC_BALANCE)
 add_executable(${PROJECT_NAME}
         # WIN32
         ${SRC_FILES}
+        ${SRC_BALANCE}
         ${RES_FILES}
         ${BIG_RES_FILES}
         ${SRC_DIR}/cocr_types.cpp
+        ${SRC_DIR}/std_util.cpp
         ${SRC_DIR}/isomer.cpp
         ${SRC_DIR}/timer.cpp
         "chemink.rc")

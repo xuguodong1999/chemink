@@ -3,10 +3,11 @@
 #include <string>
 
 class ChemBalancer {
-public:
-    ChemBalancer();
 
-    ~ChemBalancer();
+public:
+    ChemBalancer() = default;
+
+    ~ChemBalancer() = default;
 
     std::string addHtml(std::string input);
 
