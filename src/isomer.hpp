@@ -295,7 +295,8 @@ private:
     public:
         std::vector<std::vector<hash_type>> mData;
         size_t mSize;
-        const size_t max_size = 268435493ULL / 4;
+//        const size_t max_size = 268435493ULL / 4;
+        const size_t max_size = 268435493ULL / 1024;
 
         quick_set() : mSize(0) {
             mData.resize(max_size);

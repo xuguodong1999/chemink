@@ -3,6 +3,7 @@
 #include "std_util.hpp"
 #include "solver.hpp"
 #include <algorithm>
+
 using namespace std;
 
 Equation::Equation() {
@@ -142,7 +143,6 @@ bool Equation::intoMatter() {
     return 1;
 }
 
-
 void Equation::addStateInfo() {
     for (int i = 0; i < (int) leftMatters.size(); i++)
         leftMatters[i].getStateInfo();
@@ -167,7 +167,6 @@ void Equation::addStateInfo() {
             rightMatters[i].stateInfo = "↓";
     }
 }
-
 
 string Equation::p() {
 //    char *tmp = new char[MAXC];
@@ -200,17 +199,6 @@ string Equation::p() {
 //    delete[]tmp;
     return res;
 }
-
-int *Equation::pIndex(int numberOfMolecule) {
-    int indexSize = ratioList.size();
-    if (numberOfMolecule != indexSize)
-        return nullptr;
-    int *indexList = new int[indexSize];
-    for (size_t i = 0; i < indexSize; i++)
-        indexList[i] = ratioList[i];
-    return indexList;
-}
-
 
 bool Equation::intoElement() {
     //拆分
@@ -364,7 +352,6 @@ bool Equation::getRedox() {
             BREAKPOINT2:;
         }
     }
-
     //  除掉同种元素中化合价没有变化的那部分
     for (i = 0; i < cr; i++) {
         for (j = 0; j < (int) leftMatters[i].eleList.size(); j++) {
@@ -387,11 +374,9 @@ bool Equation::getRedox() {
                         rightMatters[i].eleList[j].Reduced = 0;
                         goto BREAKPOINT4;
                     }
-
             BREAKPOINT4:;
         }
     }
-
     //  确定氧化剂和还原剂
     for (i = 0; i < cr; i++) {
         for (j = 0; j < (int) leftMatters[i].eleList.size(); j++)
@@ -416,7 +401,6 @@ bool Equation::getRedox() {
                         redox[i] + tmp * (leftMatters[i].eleList[j].valence - leftMatters[i].eleList[j].finalValence);
             }
     }
-
 #ifdef TESTCEI
     cout << "氧化还原守恒向量：[";
     for (int i = 0; i < cr + cp; i++)
@@ -426,7 +410,7 @@ bool Equation::getRedox() {
     return 1;
 }
 
-bool Equation::IsConversed(vector<int> &raw) {
+bool Equation::IsConversed(const vector<int> &raw) {
     int cer = (int) leftElements.size(), cep = (int) rightElements.size();
     int cr = (int) leftMatters.size(), cp = (int) rightMatters.size();
     if (cer != cep) {
@@ -437,7 +421,6 @@ bool Equation::IsConversed(vector<int> &raw) {
         if (leftElements[i].name != rightElements[i].name)
             return 0;
     }
-
 //    int *check = new int[MAXM];
 //    for (i = 0; i < MAXM; i++)check[i] = 0;
     std::vector<int> check(std::max(cer, cep), 0);
@@ -491,7 +474,6 @@ bool Equation::exec(string &_content) {
     clear();
     return 1;
 }
-
 
 bool Equation::exec() {
     if (!intoMatter()) {

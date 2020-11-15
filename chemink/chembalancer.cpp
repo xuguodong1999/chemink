@@ -6,8 +6,8 @@ using namespace std;
 
 static Equation equation;
 
-std::string ChemBalancer::balance(std::string &input) {
-    equation.mInput = input;
+std::string ChemBalancer::balance(const std::string &_input) {
+    equation.mInput = _input;
     if (!equation.exec()) {
         equation.clear();
         return "[ERROR]";
@@ -17,6 +17,6 @@ std::string ChemBalancer::balance(std::string &input) {
     return result;
 }
 
-std::string ChemBalancer::addHtml(std::string input) {
-    return add_html(input);
+std::string ChemBalancer::addHtml(const std::string& _input) {
+    return add_html(_input);
 }

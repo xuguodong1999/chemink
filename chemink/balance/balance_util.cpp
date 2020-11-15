@@ -1163,7 +1163,7 @@ double Get_electronegativity(int proton_num) {
     return res;
 }
 
-string add_html(string &_tar) {
+string add_html(const string &_tar) {
     auto tar = replaceSubStr(replaceSubStr(replaceSubStr(replaceSubStr(replaceSubStr(
             _tar, "·", "."), "[", "("), "{", "("), "]", ")"), "}", ")");
     string res;

@@ -5,7 +5,7 @@
 #include <string>
 
 //为字符串tar按照化学方程式书写规则添加HTML标签
-std::string add_html(std::string &_tar);
+std::string add_html(const std::string &_tar);
 
 //返回元素ele的质子数
 int Get_proton_num(std::string &ele);

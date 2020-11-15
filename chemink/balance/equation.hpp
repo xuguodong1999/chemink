@@ -21,7 +21,7 @@ public:
 
     std::string p();
 
-    bool IsConversed(std::vector<int> &raw);
+    bool IsConversed(const std::vector<int> &raw);
 
     std::vector<int> oRatioList;
     std::vector<int> ratioList;
@@ -29,8 +29,6 @@ public:
     bool exec(std::string &_content);
 
     bool exec();
-
-    int *pIndex(int numberOfMolecule);
 
     const size_t getMattersNum() const {
         return leftMatters.size() + rightMatters.size();

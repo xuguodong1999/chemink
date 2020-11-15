@@ -9,7 +9,7 @@ public:
 
     ~ChemBalancer() = default;
 
-    std::string addHtml(std::string input);
+    std::string addHtml(const std::string &_input);
 
-    std::string balance(std::string &input);
+    std::string balance(const std::string &_input);
 };
